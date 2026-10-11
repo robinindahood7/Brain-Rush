@@ -2955,6 +2955,83 @@ body.bg-max #bg-game .bg-wrap{grid-template-columns:minmax(0,1fr) 330px!importan
 #roombg .rb,#roombg .rlight,#roombg .rdust,.dc-sweep,.cf-snow,.hx-waves{
   animation:none!important;
 }
+
+/* ===== Spy Alley: real board layout ===== */
+.bg-agent .bg-board{background:none!important;padding:4px!important;box-shadow:none!important}
+.sa-board{position:relative;aspect-ratio:3/4;width:min(100%,calc((100vh - 96px)*.75));margin:0 auto;container-type:inline-size;border-radius:2.2cqw;background:linear-gradient(160deg,#2a1820,#120c14 55%,#1b1426);box-shadow:inset 0 0 0 1.1cqw #1a1010,inset 0 0 0 1.6cqw #c9a45a,0 30px 60px rgba(0,0,0,.6);overflow:hidden;user-select:none}
+body.bg-max .sa-board{width:min(100%,calc((100vh - 70px)*.75))}
+.sa-inner{position:absolute;left:16.67%;right:16.67%;top:12.5%;bottom:12.5%;background-size:cover;background-position:center;opacity:.32;filter:grayscale(.4) sepia(.35) contrast(1.1);box-shadow:inset 0 0 8cqw #000}
+.sa-inner::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 35% 25%,rgba(255,80,60,.35),transparent 55%),radial-gradient(ellipse at 70% 80%,rgba(60,120,255,.35),transparent 60%)}
+.sa-title{position:absolute;left:16.67%;right:16.67%;top:13.6%;text-align:center;font:900 8.4cqw/1 var(--display,Impact),Impact,sans-serif;color:#111;letter-spacing:.04em;-webkit-text-stroke:.25cqw #ffe6a8;text-shadow:0 .6cqw 0 #ffe6a8,0 0 4cqw rgba(255,90,60,.6);pointer-events:none}
+.sa-tag{position:absolute;left:16.67%;right:16.67%;top:21%;text-align:center;font:700 1.7cqw var(--pix);color:#ffe6a8;letter-spacing:.3em;text-transform:uppercase;opacity:.8;pointer-events:none}
+.sa-path{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.sa-path polyline{fill:none;stroke:#ffd23f;stroke-width:.9;stroke-dasharray:1.4 1.2;opacity:.55;vector-effect:none}
+.sa-t{position:absolute;transform:translate(-50%,-50%);z-index:2;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:.6cqw .4cqw;border-radius:1cqw;background:linear-gradient(180deg,#fbf6e8,#e6dcc1);box-shadow:inset 0 0 0 .3cqw #222,0 .6cqw 0 rgba(0,0,0,.45);color:#161616;text-align:center;overflow:hidden}
+.sa-t b{font:800 1.75cqw/1.02 var(--pix);letter-spacing:.01em;text-transform:uppercase}
+.sa-t em{font:600 1.35cqw/1.05 var(--pix);font-style:normal;color:#3d3426}
+.sa-t .sa-ic{flex:1;min-height:0;width:72%;display:grid;place-items:center;position:relative;font-size:5.2cqw;line-height:1}
+.sa-t .sa-ic img{max-width:100%;max-height:100%;aspect-ratio:1;object-fit:cover;border-radius:.8cqw;box-shadow:0 .3cqw 0 rgba(0,0,0,.4)}
+.sa-t.pw{background:linear-gradient(180deg,#fbf6e8,color-mix(in srgb,var(--fc) 30%,#e6dcc1));box-shadow:inset 0 0 0 .3cqw #222,inset 0 -1.2cqw 0 color-mix(in srgb,var(--fc) 70%,transparent),0 .6cqw 0 rgba(0,0,0,.45)}
+.sa-t.pw b{color:color-mix(in srgb,var(--fc) 70%,#000)}
+.sa-flag{display:inline-block;width:3.2cqw;height:2.1cqw;border-radius:.3cqw;box-shadow:0 0 0 .18cqw rgba(0,0,0,.6);vertical-align:middle}
+.sa-flag.badge{position:absolute;right:-6%;bottom:2%;width:3.4cqw;height:2.3cqw}
+.sa-t.k-start{background:linear-gradient(180deg,#fff,#efe6cc)}
+.sa-t.k-start b{font-size:3cqw}
+.sa-arrow{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);font-style:normal;font-size:5.5cqw;color:#111;opacity:.18}
+.sa-t.k-ent{background:linear-gradient(180deg,#e9d7ff,#b88ae6);box-shadow:inset 0 0 0 .4cqw #4a1d7a,0 .6cqw 0 rgba(0,0,0,.45);animation:saent 1.8s ease-in-out infinite}
+@keyframes saent{50%{box-shadow:inset 0 0 0 .4cqw #4a1d7a,0 0 3cqw #c57dff,0 .6cqw 0 rgba(0,0,0,.45)}}
+.sa-t.k-border{background:linear-gradient(180deg,#ffe0d6,#f0b8a8)}
+.sa-t.k-again,.sa-t.k-back2{background:linear-gradient(180deg,#fff,#e2e8f0)}
+.sa-t.k-gift{background:linear-gradient(180deg,#fff3c4,#f0d27a)}
+.sa-t.k-cash10,.sa-t.k-cash20{background:linear-gradient(180deg,#e5f7e1,#b6e0aa)}
+.sa-t.k-black{background:linear-gradient(180deg,#d8d8de,#a9a9b4)}
+.sa-t.al{border-radius:.8cqw;padding:.4cqw .3cqw}
+.sa-t.al b{font-size:1.45cqw}
+.sa-t.al em{font-size:1.05cqw}
+.sa-t.k-elim{background:linear-gradient(180deg,#5a1a20,#240709);color:#fff}
+.sa-t.k-elim em{color:#ffb3b3}
+.sa-t.k-conf{background:linear-gradient(180deg,#e0d3f2,#b49ad6)}
+.sa-t.emb{background:linear-gradient(180deg,#9aa3ad,#6c7680);padding:.4cqw .2cqw}
+.sa-t.emb b{font-size:1.3cqw;color:#fff;text-shadow:0 .15cqw 0 #000}
+.sa-house{position:relative;flex:1;width:70%;margin-top:.3cqw;background:var(--fc);clip-path:polygon(50% 0,100% 34%,100% 100%,0 100%,0 34%);display:grid;place-items:center;box-shadow:inset 0 -1cqw 0 rgba(0,0,0,.25)}
+.sa-house .sa-flag{width:3.6cqw;height:2.4cqw;margin-top:1.2cqw}
+.sa-hud{position:absolute;left:16.67%;width:33.3%;top:56%;z-index:3;display:grid;justify-items:center;gap:1.4cqw;pointer-events:none}
+.sa-dieslot .da-die3{width:9cqw}
+.sa-mcard{width:9cqw;height:12.5cqw;border-radius:1cqw;background:linear-gradient(180deg,#fdf8ec,#e7dcc2);color:#2a1d10;display:grid;place-items:center;align-content:center;box-shadow:0 .7cqw 0 rgba(0,0,0,.5);animation:dieRoll .6s cubic-bezier(.2,1.4,.4,1) both}
+.sa-mcard b{font:800 6cqw/1 var(--pix)}
+.sa-mcard i{font:600 1.3cqw var(--pix);font-style:normal}
+.sa-msg{font:800 2.4cqw var(--pix);color:#fff;text-align:center;text-shadow:0 .3cqw 0 #000;background:rgba(0,0,0,.55);padding:.8cqw 1.6cqw;border-radius:1.2cqw}
+.sa-toks{position:absolute;inset:0;pointer-events:none;z-index:6}
+.sa-tk{position:absolute;transform:translate(-50%,-62%);transition:left .16s cubic-bezier(.3,1.4,.5,1),top .16s cubic-bezier(.3,1.4,.5,1);z-index:5}
+.sa-tk .bav{display:block;width:6.4cqw;height:7.8cqw;border-radius:1cqw;background-size:cover;background-position:center top;box-shadow:0 0 0 .55cqw var(--pc),0 1cqw 1.4cqw rgba(0,0,0,.7)}
+.sa-tk.cur{z-index:7}
+.sa-tk.cur .bav{animation:dacur 1.2s ease-in-out infinite;box-shadow:0 0 0 .55cqw var(--pc),0 0 0 1cqw #ffe066,0 0 3cqw #ffe066}
+.sa-tk.hop{animation:tkHop .17s ease-out}
+@keyframes dacur{50%{transform:translateY(-.8cqw)}}
+@keyframes tkHop{50%{transform:translate(-50%,-80%)}}
+.bg-agent .bg-side>*{flex-shrink:0}
+.sa-wild{margin:4px 0 0;font:700 .72rem var(--pix);color:#ffd23f}
+.sa-warn{display:block;margin-top:6px;color:#ffb3b3}
+.sa-score{display:grid;grid-template-columns:30px repeat(6,1fr);gap:3px;margin-top:6px;align-items:center}
+.sa-score small{font:700 .55rem var(--pix);color:#9fb0b8;margin:0}
+.sa-sh{height:14px;border-radius:3px;background:var(--fc);font:800 .5rem/14px var(--pix);color:#fff;text-align:center;font-style:normal;text-shadow:0 1px 0 rgba(0,0,0,.5)}
+.sa-peg{height:14px;border-radius:3px;background:color-mix(in srgb,var(--fc) 22%,#14181c);display:grid;place-items:center}
+.sa-peg::after{content:"";width:5px;height:5px;border-radius:50%;background:rgba(0,0,0,.6)}
+.sa-peg.on{background:var(--fc)}
+.sa-peg.on::after{width:8px;height:8px;background:#111;box-shadow:0 0 0 2px rgba(255,255,255,.5)}
+.sa-dos .bav{background-size:cover!important;background-position:center top!important}
+.sa-ff{display:grid;place-items:center}
+.sa-ff .sa-flag{width:22px;height:15px}
+.sa-eg{display:grid;gap:2px;margin:6px 0}
+.sa-eg b{font:700 .8rem var(--pix)}
+.sa-bm{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin:8px 0}
+.sa-bmi{border:0;border-radius:8px;padding:4px 2px;background:#1c232a;display:grid;justify-items:center;gap:2px;cursor:pointer;box-shadow:inset 0 0 0 2px var(--fc)}
+.sa-bmi .da-gear{width:30px;height:30px}
+.sa-bmi small{font:700 .55rem var(--pix);color:#ffe066}
+.sa-bmi:disabled{opacity:.3;cursor:default}
+.da-item.on{transform:translateY(-4px);box-shadow:inset 0 0 0 3px #fff,0 0 16px var(--fc),0 4px 0 rgba(0,0,0,.45)}
+.sa-wildg{background:#ffd23f!important;font-size:1.4rem}
+@media (max-width:900px){.sa-board{width:min(100%,calc((100vh - 120px)*.75))}}
 </style>
 
 <canvas id="bgfx" aria-hidden="true"></canvas><div id="crt" aria-hidden="true"></div><div id="dust" aria-hidden="true"><i style="--x:41%;--s:3px;--t:26s;--dl:-20s;--dx:-68px"></i><i style="--x:9%;--s:5px;--t:17s;--dl:-11s;--dx:69px"></i><i style="--x:7%;--s:5px;--t:20s;--dl:-1s;--dx:-58px"></i><i style="--x:55%;--s:4px;--t:16s;--dl:-7s;--dx:-57px"></i><i style="--x:70%;--s:4px;--t:15s;--dl:-26s;--dx:64px"></i><i style="--x:15%;--s:3px;--t:32s;--dl:-30s;--dx:-65px"></i><i style="--x:73%;--s:5px;--t:26s;--dl:-1s;--dx:-24px"></i><i style="--x:5%;--s:5px;--t:18s;--dl:-9s;--dx:27px"></i><i style="--x:18%;--s:5px;--t:17s;--dl:-18s;--dx:-2px"></i><i style="--x:71%;--s:3px;--t:17s;--dl:-18s;--dx:66px"></i><i style="--x:81%;--s:3px;--t:25s;--dl:-3s;--dx:60px"></i><i style="--x:91%;--s:2px;--t:32s;--dl:-1s;--dx:78px"></i><i style="--x:26%;--s:4px;--t:31s;--dl:-13s;--dx:0px"></i><i style="--x:59%;--s:5px;--t:28s;--dl:-11s;--dx:-4px"></i><i style="--x:31%;--s:3px;--t:21s;--dl:-2s;--dx:67px"></i><i style="--x:38%;--s:5px;--t:29s;--dl:-28s;--dx:7px"></i><i style="--x:93%;--s:4px;--t:23s;--dl:-19s;--dx:-62px"></i><i style="--x:15%;--s:5px;--t:27s;--dl:-5s;--dx:7px"></i><i style="--x:19%;--s:4px;--t:27s;--dl:-1s;--dx:-61px"></i><i style="--x:97%;--s:5px;--t:32s;--dl:-25s;--dx:0px"></i><i style="--x:43%;--s:3px;--t:29s;--dl:-18s;--dx:36px"></i><i style="--x:8%;--s:2px;--t:22s;--dl:-15s;--dx:-64px"></i><i style="--x:7%;--s:3px;--t:32s;--dl:-21s;--dx:34px"></i><i style="--x:36%;--s:4px;--t:25s;--dl:-0s;--dx:38px"></i><i style="--x:45%;--s:3px;--t:17s;--dl:-15s;--dx:-65px"></i><i style="--x:27%;--s:3px;--t:18s;--dl:-23s;--dx:-17px"></i></div><div id="splash" class="splash" hidden aria-hidden="true"></div><button id="musBtn" type="button" aria-pressed="false" aria-label="Toggle music"><span class="eq"><i></i><i></i><i></i></span><span class="ml">Music off</span></button><canvas id="fx" aria-hidden="true"></canvas><div id="flash" aria-hidden="true"></div><div id="countdown" hidden aria-live="assertive"></div>
@@ -3241,16 +3318,16 @@ const BG=(()=>{
   /* Keep one continuous clock for every redraw.  Starting at the old hero frame
      preserves the established look; palette/resize redraws must never jump to a
      different timestamp or fight the animation loop. */
-  let gl,cv,U={},cur=PALS.main.map(a=>a.slice()),tgt=PALS.main,t0=performance.now(),last=0,tt=40,spd=1,spdT=1,kk=0;
+  let gl,cv,U={},cur=PALS.main.map(a=>a.slice()),tgt=PALS.main,t0=performance.now(),last=0,tt=0,spd=1,spdT=1,kk=0;
   const FS=`#ifdef GL_FRAGMENT_PRECISION_HIGH
 precision highp float;
 #else
 precision mediump float;
 #endif
 uniform vec2 R;uniform float K,T;uniform vec4 Q;uniform float Q5;uniform vec3 A,B,C;
-void main(){vec2 uv=(gl_FragCoord.xy-.5*R)/min(R.x,R.y);uv+=vec2(sin(T*.27),cos(T*.23))*.07;float d=length(uv);float a=atan(uv.y,uv.x);
-float sw=a+Q.x-d*3.1+sin(Q.y)*.18+sin(T*.12)*.38;vec2 p=vec2(cos(sw),sin(sw))*d*8.4;
-for(int i=0;i<6;i++){float f=float(i);p+=vec2(sin(p.y*1.35+Q.z+f*1.3+T*.045),cos(p.x*1.4-Q.w+f*.7-T*.04))*.28;}
+void main(){vec2 uv=(gl_FragCoord.xy-.5*R)/min(R.x,R.y);float d=length(uv);float a=atan(uv.y,uv.x);
+float sw=a+Q.x-d*(2.3+K*1.2)+sin(Q.y)*.6;vec2 p=vec2(cos(sw),sin(sw))*d*3.4;
+for(int i=0;i<6;i++){float f=float(i);p+=vec2(sin(p.y*1.1+Q.z+f*1.3),cos(p.x*1.2-Q.w+f*.7))*.55;}
 float v=.5+.5*sin(p.x*.9+p.y*.7);float w=.5+.5*sin(length(p)*.9-Q5);
 vec3 col=mix(A,B,smoothstep(.3,.7,v));col=mix(col,C,smoothstep(.45,.95,w)*.72);
 col+=smoothstep(.93,1.,.5+.5*sin((p.x-p.y)*2.2))*(.11+K*.25);
@@ -3270,10 +3347,10 @@ vec2 g=gl_FragCoord.xy;float n=fract(sin(dot(floor(g),vec2(12.9898,78.233)))*437
     frame(tt);last=performance.now();requestAnimationFrame(loop)}
   function size(){if(!gl)return;const s=Math.max(4,Math.min(6,innerWidth/380));const w=Math.ceil(innerWidth/s),h=Math.ceil(Math.max(innerHeight,screen.height*.8)/s);if(cv.width===w&&Math.abs(cv.height-h)<60/s)return;cv.width=w;cv.height=h;gl.viewport(0,0,w,h);frame(tt)}
   function frame(t){for(let i=0;i<3;i++)for(let j=0;j<3;j++)cur[i][j]+=(tgt[i][j]-cur[i][j])*.035;
-    gl.uniform2f(U.R,cv.width,cv.height);gl.uniform1f(U.T,t);gl.uniform4f(U.Q,1.8,2.8,8.4,6.8);gl.uniform1f(U.Q5,10.0);gl.uniform1f(U.K,kk);gl.uniform3fv(U.A,cur[0]);gl.uniform3fv(U.B,cur[1]);gl.uniform3fv(U.C,cur[2]);gl.drawArrays(gl.TRIANGLES,0,3)}
-  let acc=0;function loop(now){requestAnimationFrame(loop);if(document.hidden||document.body.classList.contains('no-bgfx')||document.body.classList.contains('user-reduced-motion')){last=now;acc=0;return}const gap=now-last;last=now;acc+=gap;if(acc<31)return;const dt=Math.min(.1,acc/1000);acc=0;spd+=(spdT-spd)*.05;tt+=dt*spd*1.35;kk*=.9;frame(tt)}
+    gl.uniform2f(U.R,cv.width,cv.height);gl.uniform1f(U.T,t);const W=6.283185307179586,m=x=>x%W;gl.uniform4f(U.Q,m(t*.045),m(t*.07),m(t*.21),m(t*.17));gl.uniform1f(U.Q5,m(t*.25));gl.uniform1f(U.K,kk);gl.uniform3fv(U.A,cur[0]);gl.uniform3fv(U.B,cur[1]);gl.uniform3fv(U.C,cur[2]);gl.drawArrays(gl.TRIANGLES,0,3)}
+  function loop(now){requestAnimationFrame(loop);if(document.hidden||document.body.classList.contains('no-bgfx')||document.body.classList.contains('user-reduced-motion')){last=now;return}const dt=Math.min(.05,(now-last)/1000);last=now;spd+=(spdT-spd)*.05;tt+=dt*spd*1.6;kk*=.9;frame(tt)}
   /* Music and game events must never reshape/restart the scenery. */
-  function kick(){}function boost(on){spdT=on?2:1}
+  function kick(n){kk=Math.min(1.2,kk+.25*(n||1))}function boost(on){spdT=on?4:1}
   let palK='main',burstT=null,palRAF=0;function pal(k){try{ROOM.set(k)}catch(e){}const n=PALS[k]?k:'main';if(n===palK)return;palK=n;const next=PALS[n];tgt=next;if(gl){cancelAnimationFrame(palRAF);const from=cur.map(a=>a.slice()),start=performance.now();const step=now=>{const p=Math.min(1,(now-start)/480),e=1-Math.pow(1-p,3);cur=from.map((a,i)=>a.map((v,j)=>v+(next[i][j]-v)*e));frame(tt);if(p<1)palRAF=requestAnimationFrame(step);else{cur=next.map(a=>a.slice());frame(tt)}};palRAF=requestAnimationFrame(step);return}try{ROOM.set(k)}catch(e){}}
   return{init,pal,kick,boost}})();
 
@@ -4153,7 +4230,7 @@ mahbouseh:[['🔒','The twist','No hitting here: land on a lone enemy checker an
  hex:[['🏝️','The goal','Be first to 10 points. Towns = 1 point, cities = 2, plus bonus cards.'],['🏠','Start','Place 2 towns on glowing corners, each with a road. Pick corners touching big red numbers (6 and 8) and many dots.'],['🎲','Every turn','Roll the dice. Every hex with that number pays cards to the towns around it, for everyone.'],['🔨','Build','Road = Timber + Clay. Town = Timber, Clay, Wool, Grain. City = 2 Grain + 3 Ore. Tap Build, then tap the board.'],['🔁','Trade','Missing a card? Trade 4:1 with the bank, cheaper at harbors, or offer a deal to players.'],['🦹','The robber','A 7 moves the robber: it blocks a hex and steals a card. Hold 8+ cards and you lose half!']],
  conquest:[['🌍','The goal','Conquer the world: own every territory, or be the last general standing.'],['➕','Reinforce','Each turn you get new armies: territories ÷ 3 (min 3) plus bonuses for whole continents. Tap your land to drop them.'],['⚔️','Attack','Tap one of your territories with 2+ armies, then a neighbor. Dice decide: attacker up to 3, defender up to 2, highest dice compared.'],['🚚','Fortify','End your turn by moving armies between two connected territories of yours.'],['🃏','Cards','Conquer at least one territory per turn to earn a card. Sets give big army bonuses.']],
  siege:[['🚩','The goal','Capture the enemy Flag, or leave them with no piece that can move.'],['🙈','Hidden ranks','You only see your own pieces. Enemy ranks are revealed when they fight.'],['🚶','Moving','Move one piece one square per turn (no diagonals, no lakes). Scouts (2) run any distance. Bombs and the Flag never move. No fourth straight back-and-forth move.'],['⚔️','Battles','Move onto an enemy: the higher rank wins, equal ranks both die. 10 Marshal is strongest.'],['💣','Special rules','Bombs blow up anyone except Miners (3). The Spy (S) beats the Marshal only when the Spy attacks.']],
- agent:[['🕵️','The goal','Find out who the others are spying for, and finish your secret mission first.'],['🎲','Move','Roll and move around the city. Landing on places gives you cards, gear or intel.'],['🗂️','Mission','Collect the gear on your mission card, then reach your home embassy.'],['🎯','Accuse','Think you know someone’s nation? Accuse them. Right: they’re out. Wrong: you are.']],
+ agent:[['🕵️','The goal','You’re a secret spy for one of six countries. Get your password, disguise, code book and key, then land exactly on your own embassy.'],['🎭','Bluff','Your scorecard is public. Buy decoy items from other countries so nobody can tell who you are.'],['🚪','Spy Alley','Pass the entrance and you choose; land on it and you must go in. It’s where the embassies, the $20 and the Spy Eliminator are.'],['🎯','Guess','Instead of moving, name a spy’s country. Right: they’re out and you take everything. Wrong: you’re out.']],
  kursi:[['🪑','The goal','Get a President from your camp elected. Reformists want an honest one, the Corrupt want one of theirs.'],['🗺️','Districts','Win districts to lead district groups. Each group you lead gives you its parliament seats.'],['👉','Your turn','Do ONE action: Campaign for a free district, Attack a neighbor, Swap, take a new agenda, or pass.'],['🤫','Secret agenda','Your goal card completes by itself and gives a power. Reformists must complete one.'],['🗳️','The vote','After 5 rounds everyone votes with their seats. Talk, deal and bluff!']],
  defcon:[['🌐','The goal','Win the Cold War by influence or economy without starting a nuclear war.'],['📝','Plan','Pick up to 3 order cards, tap a glowing country for each, then SEAL. Your rival does the same in secret.'],['⚙️','Resolve','Orders resolve together. Influence wins control of a country when you lead by its stability.'],['🚨','DEFCON','Aggressive orders lower DEFCON. At DEFCON 2 talks open. At DEFCON 1 if both hold firm, everyone loses.'],['🏆','Winning','Reach the political or economic goal from round 4, or have the most points after the last round.']],
  coldfront:[['⭐','The goal','Place stars by finishing goals. The 6th star ends the game; the richest faction wins.'],['🗂️','Command board','Each turn pick 1 of 4 sections (not the same as last turn). Do its top action, then its bottom action if you can pay.'],['🥾','Top actions','Move units, Produce resources with workers, Trade coins for resources, or Bolster power and combat cards.'],['🏗️','Bottom actions','Upgrade, Deploy walking machines, Build structures, Enlist recruits. They cost resources and pay coins.'],['⚔️','Battles','Moving a leader or machine onto an enemy fighter starts a secret power + cards duel.']],
@@ -5472,171 +5549,254 @@ BRD.reg({id:'siege',name:'Siegefall',like:'Hidden-rank war',blurb:'Two armies, 4
   phaseName:S=>S.ph==='setup'?'Deploy your army':''});
 })();
 
-/* ===== DOUBLE AGENT: secret factions, bluff-buying, accusations (2-6) ===== */
+/* ===== SPY ALLEY: the real 1992 board + official rules (2-6) ===== */
 (()=>{
-const FAC=[{n:'Soviet Union',c:'#e0373f',g:'☭'},{n:'Britain',c:'#2e7ad6',g:'🇬🇧'},{n:'Italy',c:'#2f9e62',g:'🇮🇹'},{n:'Spain',c:'#ee9d1c',g:'🇪🇸'},{n:'France',c:'#8a49c9',g:'🇫🇷'},{n:'Germany',c:'#3a3f47',g:'🇩🇪'}];
-const CITY=['London','Dublin','Edinburgh','Oslo','Stockholm','Copenhagen','Helsinki','Riga','Leningrad','Moscow','Kyiv','Odessa','Bucharest','Istanbul','Ankara','Athens','Sofia','Belgrade','Sarajevo','Naples','Rome','Tunis','Algiers','Gibraltar','Lisbon','Madrid','Barcelona','Paris'];
-const CXY=[[24,26],[15,19],[24,11],[42,8],[50,13],[44,19],[61,7],[60,19],[70,11],[86,30],[72,38],[73,52],[64,57],[77,70],[89,68],[62,80],[60,65],[55,57],[50,64],[46,72],[43,61],[39,88],[24,86],[10,80],[5,66],[15,62],[24,60],[31,43]];
-const EMB=['Hamburg','Berlin','Warsaw','Prague','Vienna','Budapest'];const EXY=[[38,30],[48,29],[57,30],[47,40],[54,45],[61,47]];
-const IT={pw:{n:'Password',c:1,g:'✎'},dg:{n:'Disguise',c:5,g:'☂'},cb:{n:'Codebook',c:15,g:'▤'},ky:{n:'Key',c:30,g:'⚿'}};
+/* Scorecard order + colours from the real game */
+const FAC=[
+  {n:'French',c:'#7b3fc4',fl:'linear-gradient(90deg,#0055a4 33.3%,#fff 33.3% 66.6%,#ef4135 66.6%)'},
+  {n:'German',c:'#f07a1a',fl:'linear-gradient(#111 33.3%,#dd0000 33.3% 66.6%,#ffce00 66.6%)'},
+  {n:'Spanish',c:'#f2c81c',fl:'linear-gradient(#aa151b 25%,#f1bf00 25% 75%,#aa151b 75%)'},
+  {n:'Italian',c:'#1f9e4a',fl:'linear-gradient(90deg,#009246 33.3%,#fff 33.3% 66.6%,#ce2b37 66.6%)'},
+  {n:'American',c:'#2a6fd6',fl:'linear-gradient(#3c3b6e,#3c3b6e) 0 0/44% 54% no-repeat,repeating-linear-gradient(#b22234 0 15.4%,#fff 15.4% 30.8%)'},
+  {n:'Russian',c:'#e0373f',fl:'linear-gradient(#fff 33.3%,#0039a6 33.3% 66.6%,#d52b1e 66.6%)'}];
 const IK=['pw','dg','cb','ky'];
-// 28-tile loop on an 8x8 ring, alley of 6 embassies across row 4
-const T=['start','pw','cash5','fork','dg','card','conf','black','cb','cash10','elim','pw','ky','tax','gift','dg','card','cash5','cb','conf','pw','elim','ky','black','cash10','dg','tax','cb'];
-const TN={start:'HQ · +$15',pw:'Buy Password',dg:'Buy Disguise',cb:'Buy Codebook',ky:'Buy Key',cash5:'Payday +$5',cash10:'Payday +$10',fork:'Spy Alley turn-off',card:'Move card',conf:'Confiscate',black:'Black market',elim:'Spy Eliminator',tax:'Bribe −$5',gift:'Free gift'};
-const TG={start:'HQ',pw:'✎',dg:'☂',cb:'▤',ky:'⚿',cash5:'$5',cash10:'$10',fork:'⤵',card:'🂠',conf:'✋',black:'$?',elim:'☠',tax:'−$5',gift:'🎁'};
-const ringXY=i=>i<=7?[7-i,0]:i<=14?[0,i-7]:i<=21?[i-14,7]:[7,28-i];
-const AL=100,EXIT=18,FORK=3;
-const rnd=a=>a[Math.random()*a.length|0];
+const IT={pw:{n:'Password',c:1,cf:5},dg:{n:'Disguise',c:5,cf:5},cb:{n:'Code book',c:15,cf:10},ky:{n:'Key',c:30,cf:25}};
+const WILD_CF=50;
+/* Outer track, clockwise from START (24 spaces, exactly as printed on the board) */
+const T=[{k:'start'},{k:'pw',f:5},{k:'card'},{k:'dg'},{k:'pw',f:4},{k:'card'},
+  {k:'again'},{k:'gift'},{k:'cash10'},{k:'pw',f:3},{k:'ky'},{k:'pw',f:2},
+  {k:'card'},{k:'black'},{k:'ent'},{k:'border'},{k:'back2'},{k:'pw',f:1},
+  {k:'cb'},{k:'card'},{k:'gift'},{k:'pw',f:0},{k:'card'},{k:'black'}];
+/* Spy Alley: nine spaces from Collect $20 to the Russian Embassy */
+const ALY=[{k:'cash20'},{k:'elim'},{k:'emb',f:0},{k:'emb',f:1},{k:'conf'},{k:'emb',f:2},{k:'emb',f:3},{k:'emb',f:4},{k:'emb',f:5}];
+const AL=100,ENT=14,BORDER=15,BACK=16,EXIT=22,N=24;
+const EMBP=[AL+2,AL+3,AL+5,AL+6,AL+7,AL+8];
+const sp=pos=>pos>=AL?ALY[pos-AL]:T[pos];
 const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
 const d6=()=>1+(Math.random()*6|0);
-function init(n){const f=shuf([0,1,2,3,4,5]);const S={n,p:[],cur:0,ph:'move',pend:null,win:null,winWhy:'',out:Array(n).fill(0),roll:null,anim:0,feed:[]};
-  for(let i=0;i<n;i++)S.p.push({f:f[i],m:10*n,it:[],pos:0,cards:[d6(),d6()],out:0});return S}
-function next(pos){return pos>=AL?(pos-AL<5?pos+1:EXIT):(pos+1)%28}
-function path(pos,k,alley){const out=[];let p=pos;for(let s=0;s<k;s++){p=(p===FORK&&alley)?AL:next(p);out.push(p)}return out}
+const iname=x=>x==='W'?'Wild card':FAC[+x[2]].n+' '+IT[x.slice(0,2)].n.toLowerCase();
+function giftDeck(){const d=[];for(let f=0;f<6;f++)['pw','dg','dg','cb','cb','ky'].forEach(k=>d.push(k+f));for(let i=0;i<4;i++)d.push('W');return shuf(d)}
+function moveDeck(){const d=[];for(let v=1;v<=6;v++)for(let i=0;i<6;i++)d.push(v);return shuf(d)}
+function init(n){const f=shuf([0,1,2,3,4,5]);const S={n,p:[],cur:Math.random()*n|0,ph:'move',pend:null,win:null,winWhy:'',out:Array(n).fill(0),roll:null,anim:0,feed:[],gift:giftDeck(),mdeck:moveDeck(),sw:null,again:0,mv:null};
+  for(let i=0;i<n;i++)S.p.push({f:f[i],m:10*n,it:[],w:0,pos:0,cards:[],out:0});return S}
 const has=(P,k,f)=>P.it.includes(k+f);
-const full=P=>IK.every(k=>has(P,k,P.f));
+const missing=P=>IK.filter(k=>!has(P,k,P.f));
+const complete=P=>missing(P).length<=P.w;
 const alive=S=>S.p.map((p,i)=>i).filter(i=>!S.p[i].out);
-function nextTurn(S){if(S.win!=null)return;const a=alive(S);if(a.length===1){S.win=a[0];S.winWhy='Last spy standing.';return}let c=S.cur;do c=(c+1)%S.n;while(S.p[c].out);S.cur=c;S.ph='move';S.pend=null;S.roll=null}
-function eliminate(S,i,by){const P=S.p[i];P.out=1;S.out[i]=1;if(by!=null){const B=S.p[by];B.m+=P.m;P.it.forEach(x=>{if(!B.it.includes(x))B.it.push(x)});P.m=0;P.it=[]}}
-function land(S,i){const P=S.p[i];const pos=P.pos;
-  if(pos>=AL){const f=pos-AL;if(f===P.f&&full(P)){S.win=i;S.winWhy='Walked into the '+FAC[f].n+' embassy with a full kit!';return 'enters the '+FAC[f].n+' embassy. MISSION COMPLETE!'}
-    return 'walks past the '+FAC[f].n+' embassy'}
-  const t=T[pos];
-  if(t==='cash5'||t==='cash10'){const v=t==='cash5'?5:10;P.m+=v;return 'gets $'+v}
-  if(t==='tax'){P.m=Math.max(0,P.m-5);return 'pays a $5 bribe'}
-  if(t==='card'){if(P.cards.length<3){P.cards.push(d6());return 'draws a move card'}P.m+=3;return 'has a full hand, takes $3'}
-  if(IK.includes(t)){if(P.m>=IT[t].c){S.ph='buy';S.pend={k:[t]};return null}return 'can’t afford a '+IT[t].n}
-  if(t==='black'){if(P.m>=2){S.ph='buy';S.pend={k:IK.slice()};return null}return 'is broke at the black market'}
-  if(t==='gift'){S.ph='buy';S.pend={k:[rnd(IK)],free:1};return null}
-  if(t==='conf'){const ok=S.p.some((q,j)=>j!==i&&!q.out&&q.it.length)&&P.m>=2;if(ok){S.ph='conf';return null}return 'finds nothing to confiscate'}
-  if(t==='elim'){S.ph='elim';return null}
-  return null}
-function apply(S,i,a){if(S.win!=null)throw new Error('Game over');if(S.cur!==i)throw new Error('Not your turn');const P=S.p[i];
-  if(a.t==='accuse'){if(S.ph!=='move'&&S.ph!=='elim')throw new Error('Accuse at the start of your turn');const j=a.who,f=a.f;const Q=S.p[j];if(!Q||Q.out||j===i)throw new Error('Pick a rival');
-    const safe=S.ph==='elim';if(safe&&Q.pos<AL)throw new Error('The Spy Eliminator can only target a spy inside Spy Alley');S.anim++;
-    if(Q.f===f){eliminate(S,j,i);S.feed.unshift({k:'hit',i,j,f,a:S.anim});const a2=alive(S);if(a2.length===1){S.win=i;S.winWhy='Unmasked every rival spy.'}else if(safe)nextTurn(S);return 'unmasks {'+j+'} as '+FAC[f].n+'! They’re out.'}
-    S.feed.unshift({k:'miss',i,j,f,a:S.anim});
-    if(safe){nextTurn(S);return 'guesses '+FAC[f].n+'. Wrong, but the Eliminator protects them.'}
-    eliminate(S,i,null);S.p[i].m=0;const a2=alive(S);if(a2.length===1){S.win=a2[0];S.winWhy='Everyone else blew their cover.'}else nextTurn(S);return 'accuses wrongly and is burned!'}
-  if(S.ph==='move'){let k;if(a.t==='roll'){k=d6()}else if(a.t==='card'){k=P.cards[a.i];if(!k)throw new Error('No such card');P.cards.splice(a.i,1)}else throw new Error('Roll or play a move card');
-    S.roll={k,by:a.t};S.anim++;
-    const crosses=P.pos<AL&&(()=>{let p=P.pos;for(let s=0;s<k-1;s++){p=next(p);if(p===FORK)return true}return P.pos===FORK})();
-    if(crosses||(P.pos===FORK)){S.ph='fork';S.pend={k};return 'moves '+k+'…'}
+const inAlley=P=>P.pos>=AL;
+function nxt(p,al){if(p>=AL)return p<AL+8?p+1:EXIT;if(p===ENT)return al?AL:BORDER;return(p+1)%N}
+function path(from,k,al){const out=[];let p=from;for(let s=0;s<k;s++){p=nxt(p,(s===0&&from===ENT)?true:al);out.push(p)}return out}
+/* does this move walk PAST the entrance (a choice), rather than start/stop on it? */
+function forks(from,k){if(from===ENT||from>=AL)return false;const pt=path(from,k,false);const i=pt.indexOf(ENT);return i>=0&&i<pt.length-1}
+function checkLast(S){const a=alive(S);if(a.length===1&&S.win==null){S.win=a[0];S.winWhy='Last spy standing.';return true}return false}
+function nextTurn(S){if(S.win!=null)return;if(checkLast(S))return;let c=S.cur;do c=(c+1)%S.n;while(S.p[c].out);S.cur=c;S.ph='move';S.pend=null;S.again=0;S.sw=null}
+function endTurn(S){if(S.win!=null)return;const P=S.p[S.cur];if(S.again&&!P.out){S.again=0;S.ph='move';S.pend=null;S.sw=null;return}nextTurn(S)}
+/* eliminated spy hands over cash, cards, items and ID card */
+function transfer(S,from,to){const A=S.p[from],B=S.p[to];B.m+=A.m;A.it.forEach(x=>{if(!B.it.includes(x))B.it.push(x)});B.w+=A.w;B.cards.push(...A.cards);A.m=0;A.it=[];A.w=0;A.cards=[];A.out=1;S.out[from]=1}
+function step(S,i,k,al){const P=S.p[i];let pt=path(P.pos,k,al);let msg='moves '+k;
+  // Border crossing: if you can't pay $5 you may not land there and must enter Spy Alley
+  if(pt[pt.length-1]===BORDER&&P.m<5){pt=path(P.pos,k,true);msg+=', can’t pay the border and slips into Spy Alley'}
+  for(const q of pt.slice(0,-1))if(q===0){P.m+=15;msg+=', passes START (+$15)'}
+  if(pt[pt.length-1]===0)P.m+=15;
+  S.anim++;S.mv={i,trail:pt,a:S.anim};P.pos=pt[pt.length-1];S.ph='move';S.pend=null;
+  const r=land(S,i);if(S.ph==='move'&&S.win==null)endTurn(S);return msg+(r?' and '+r:'')}
+function land(S,i){const P=S.p[i];const s=sp(P.pos);
+  switch(s.k){
+    case 'start':return 'lands on START (+$15)';
+    case 'pw':{if(has(P,'pw',s.f))return 'already has the '+FAC[s.f].n+' password';if(P.m<1)return 'can’t afford the '+FAC[s.f].n+' password';S.ph='buy';S.pend={kind:'pw',f:s.f};return null}
+    case 'dg':case 'cb':case 'ky':{const opts=[0,1,2,3,4,5].filter(f=>!has(P,s.k,f));if(!opts.length)return 'already owns every '+IT[s.k].n.toLowerCase();if(P.m<IT[s.k].c)return 'can’t afford a '+IT[s.k].n.toLowerCase()+' ($'+IT[s.k].c+')';S.ph='buy';S.pend={kind:'multi',k:s.k};return null}
+    case 'black':{const ok=IK.some(k=>P.m>=IT[k].c&&[0,1,2,3,4,5].some(f=>!has(P,k,f)));if(!ok)return 'can’t afford anything on the black market';S.ph='buy';S.pend={kind:'black'};return null}
+    case 'card':{const v=S.mdeck.shift()||d6();P.cards.push(v);return 'draws a move card: '+v}
+    case 'gift':{const c=S.gift.shift();if(!c)return 'finds the gift pile empty';if(c==='W'){P.w++;return 'draws a WILD CARD! 🃏'}S.gift.push(c);if(P.it.includes(c))return 'draws a free '+iname(c)+' but already has it';P.it.push(c);return 'gets a free '+iname(c)}
+    case 'cash10':P.m+=10;return 'collects $10';
+    case 'cash20':P.m+=20;return 'collects $20';
+    case 'again':S.again=1;return 'gets to TAKE ANOTHER TURN';
+    case 'back2':{if(S.mv&&S.mv.i===i)S.mv.trail=[...S.mv.trail,BORDER,ENT];P.pos=ENT;return 'must move back 2 — onto the Spy Alley entrance. They MUST enter Spy Alley next move'}
+    case 'ent':return 'stops on the Spy Alley entrance and MUST enter Spy Alley next move';
+    case 'border':P.m-=5;return 'pays $5 at the border crossing';
+    case 'elim':{const t=alive(S).filter(j=>j!==i&&inAlley(S.p[j]));if(!t.length)return 'reaches the Spy Eliminator, but nobody else is in Spy Alley';S.ph='elim';return null}
+    case 'conf':{const ok=alive(S).some(j=>j!==i&&(S.p[j].it.some(x=>!P.it.includes(x)&&P.m>=IT[x.slice(0,2)].cf)||(S.p[j].w&&P.m>=WILD_CF)));if(!ok)return 'finds nothing they can confiscate';S.ph='conf';return null}
+    case 'emb':{if(s.f===P.f&&complete(P)){S.win=i;S.winWhy='Landed on the '+FAC[s.f].n+' embassy with a complete '+FAC[s.f].n+' kit!';return 'enters the '+FAC[s.f].n+' embassy. MISSION COMPLETE!'}return 'is just visiting the '+FAC[s.f].n+' embassy'}
+  }return null}
+/* a guess: correct → target out, wrong → guesser out. Survivor takes everything and may switch ID */
+function resolveGuess(S,i,j,f,free){const Q=S.p[j];S.anim++;
+  if(Q.f===f){transfer(S,j,i);S.feed.unshift({k:'hit',i,j,f,a:S.anim});return{ok:1,by:i,idf:f}}
+  S.feed.unshift({k:'miss',i,j,f,a:S.anim});if(free)return{ok:0};
+  const lostF=S.p[i].f;transfer(S,i,j);return{ok:0,by:j,idf:lostF}}
+function openSwap(S,by,opts){if(checkLast(S))return;const B=S.p[by];opts=opts.filter(f=>f!==B.f);if(!opts.length){endTurn(S);return}S.ph='swap';S.sw={by,opts}}
+function apply(S,i,a){if(S.win!=null)throw new Error('Game over');
+  if(S.ph==='swap'){if(!S.sw||S.sw.by!==i)throw new Error('Waiting for another spy');if(a.t!=='swap')throw new Error('Choose your identity');const P=S.p[i];let msg='decides on an identity (secret)';if(a.k!=null&&a.k>=0&&S.sw.opts[a.k]!=null)P.f=S.sw.opts[a.k];S.sw=null;
+    // the turn that caused this ends now (guessing replaces your turn)
+    S.again=0;nextTurn(S);return msg}
+  if(S.cur!==i)throw new Error('Not your turn');const P=S.p[i];
+  if(a.t==='accuse'){if(S.ph!=='move')throw new Error('Guess instead of moving, at the start of your turn');const j=a.who,f=a.f;const Q=S.p[j];if(!Q||Q.out||j===i||!(f>=0&&f<6))throw new Error('Pick a rival and a country');
+    const r=resolveGuess(S,i,j,f,false);
+    if(r.ok){const m='accuses {'+j+'} of being '+FAC[f].n+' — CORRECT! {'+j+'} is out and hands over everything';if(checkLast(S))return m;openSwap(S,i,[r.idf]);return m}
+    const m='accuses {'+j+'} of being '+FAC[f].n+' — WRONG! They’re out and {'+j+'} takes everything';if(checkLast(S))return m;openSwap(S,j,[r.idf]);return m}
+  if(S.ph==='move'){let k;if(a.t==='roll')k=d6();else if(a.t==='card'){k=P.cards[a.i];if(!k)throw new Error('No such card');P.cards.splice(a.i,1);S.mdeck.push(k)}else throw new Error('Roll or play a move card');
+    S.rc=(S.rc||0)+1;S.roll={k,by:a.t,a:S.rc};
+    if(forks(P.pos,k)){S.anim++;S.ph='fork';S.pend={k};return (a.t==='card'?'plays a '+k+' move card':'rolls '+k)+'…'}
     return step(S,i,k,false)}
-  if(S.ph==='fork'){if(a.t!=='fork')throw new Error('Choose a path');return step(S,i,S.pend.k,!!a.alley)}
-  if(S.ph==='buy'){if(a.t==='skip'){nextTurn(S);return 'passes'}if(a.t!=='buy')throw new Error('Buy or pass');
-    if(!S.pend.k.includes(a.k))throw new Error('Not sold here');const cost=S.pend.free?0:IT[a.k].c;if(P.m<cost)throw new Error('Not enough cash');if(has(P,a.k,a.f))throw new Error('You already own that');
-    P.m-=cost;P.it.push(a.k+a.f);S.anim++;nextTurn(S);return (cost?'buys':'gets a free')+' '+FAC[a.f].n+' '+IT[a.k].n}
-  if(S.ph==='conf'){if(a.t==='skip'){nextTurn(S);return 'lets it go'}if(a.t!=='conf')throw new Error('Pick an item');const Q=S.p[a.who];if(!Q||Q.out||a.who===i||!Q.it.includes(a.x))throw new Error('They don’t have that');
-    const cost=IT[a.x.slice(0,2)].c;if(P.m<cost)throw new Error('Costs $'+cost);if(P.it.includes(a.x))throw new Error('You already have one');P.m-=cost;Q.m+=cost;Q.it.splice(Q.it.indexOf(a.x),1);P.it.push(a.x);nextTurn(S);
-    return 'confiscates a '+FAC[+a.x[2]].n+' '+IT[a.x.slice(0,2)].n+' (pays $'+cost+')'}
-  if(S.ph==='elim'){if(a.t==='skip'){nextTurn(S);return 'holds fire'}throw new Error('Accuse or skip')}
+  if(S.ph==='fork'){if(a.t!=='fork')throw new Error('Choose a path');const al=!!a.alley;return (al?'turns into SPY ALLEY: ':'stays on the street: ')+step(S,i,S.pend.k,al)}
+  if(S.ph==='buy'){const pd=S.pend;if(a.t==='skip'){endTurn(S);return 'buys nothing'}if(a.t!=='buy')throw new Error('Buy or pass');
+    let xs=Array.isArray(a.x)?a.x.slice():[a.x];xs=[...new Set(xs)];if(!xs.length)throw new Error('Pick something');
+    for(const x of xs){if(typeof x!=='string'||!IT[x.slice(0,2)]||!(+x[2]>=0&&+x[2]<6))throw new Error('Bad item');if(P.it.includes(x))throw new Error('You already own that')}
+    if(pd.kind==='pw'){if(xs.length!==1||xs[0]!=='pw'+pd.f)throw new Error('Only the '+FAC[pd.f].n+' password is sold here')}
+    else if(pd.kind==='multi'){if(xs.some(x=>x.slice(0,2)!==pd.k))throw new Error('Only '+IT[pd.k].n.toLowerCase()+'s are sold here')}
+    else if(pd.kind==='black'){if(xs.length!==1)throw new Error('The black market sells one item only')}
+    const cost=xs.reduce((s,x)=>s+IT[x.slice(0,2)].c,0);if(cost>P.m)throw new Error('Not enough cash ($'+cost+')');
+    P.m-=cost;xs.forEach(x=>P.it.push(x));S.anim++;endTurn(S);return 'buys '+xs.map(iname).join(', ')+' ($'+cost+')'}
+  if(S.ph==='conf'){if(a.t==='skip'){endTurn(S);return 'confiscates nothing'}if(a.t!=='conf')throw new Error('Pick an item');const Q=S.p[a.who];if(!Q||Q.out||a.who===i)throw new Error('Pick a rival');
+    if(a.x==='W'){if(!Q.w)throw new Error('They have no wild card');if(P.m<WILD_CF)throw new Error('Costs $'+WILD_CF);P.m-=WILD_CF;Q.m+=WILD_CF;Q.w--;P.w++;endTurn(S);return 'confiscates a WILD CARD from {'+a.who+'} (pays $'+WILD_CF+')'}
+    if(!Q.it.includes(a.x))throw new Error('They don’t have that');if(P.it.includes(a.x))throw new Error('You already have one');const cost=IT[a.x.slice(0,2)].cf;if(P.m<cost)throw new Error('Costs $'+cost);
+    P.m-=cost;Q.m+=cost;Q.it.splice(Q.it.indexOf(a.x),1);P.it.push(a.x);endTurn(S);return 'confiscates the '+iname(a.x)+' from {'+a.who+'} (pays them $'+cost+')'}
+  if(S.ph==='elim'){if(a.t==='skip'){endTurn(S);return 'holds fire at the Spy Eliminator'}if(a.t!=='elim')throw new Error('Make your free guesses or skip');
+    const g=(a.g||[]).filter(x=>Array.isArray(x)&&x.length===2);if(!g.length)throw new Error('Guess at least one spy');const msgs=[],won=[];
+    for(const [j,f] of g){const Q=S.p[j];if(!Q||Q.out||j===i||!inAlley(Q)||!(f>=0&&f<6))continue;const r=resolveGuess(S,i,j,f,true);if(r.ok){won.push(r.idf);msgs.push('{'+j+'} IS '+FAC[f].n+' — eliminated!')}else msgs.push('{'+j+'} is not '+FAC[f].n)}
+    const m='uses the Spy Eliminator: '+(msgs.join(' · ')||'no valid targets');if(checkLast(S))return m;if(won.length)openSwap(S,i,won);else endTurn(S);return m}
   throw new Error('Bad action')}
-function step(S,i,k,alley){const P=S.p[i];const pth=path(P.pos,k,alley);let msg='moves '+k;
-  for(const q of pth.slice(0,-1))if(q===0){P.m+=15;msg+=', passes HQ (+$15)'}
-  P.from=P.pos;S.mv={i,trail:pth,a:S.anim};P.pos=pth[pth.length-1];if(P.pos===0)P.m+=15;S.ph='move';S.pend=null;const r=land(S,i);
-  if(S.ph==='move')nextTurn(S);return msg+(r?' and '+r:'')}
-function turn(S){return S.win!=null?null:S.cur}
-/* ---------- bot: deduce factions from public buying ---------- */
-function guess(S,i){const res=[];for(let j=0;j<S.n;j++){if(j===i||S.p[j].out)continue;const cnt=Array(6).fill(0);S.p[j].it.forEach(x=>cnt[+x[2]]+=IT[x.slice(0,2)].c>=7?2:1);cnt[S.p[i].f]=-1;
-    // factions known to belong to eliminated spies are impossible
-    S.feed.forEach(e=>{if(e.k==='hit')cnt[e.f]=-1;if(e.k==='miss'&&e.j===j)cnt[e.f]=-1});
-    const mx=Math.max(...cnt);const tops=cnt.map((v,f)=>v===mx?f:-1).filter(f=>f>=0);const tot=cnt.filter(v=>v>0).reduce((a,b)=>a+b,0);
-    res.push({j,f:tops[0],conf:tops.length===1&&mx>=4?mx/Math.max(1,tot):0,danger:S.p[j].it.filter(x=>+x[2]===tops[0]).length})}return res}
-function bot(S,i){const P=S.p[i];const G=guess(S,i);
-  if(S.ph==='move'||S.ph==='elim'){const sure=G.filter(g=>g.conf>=.75||(g.danger>=3&&g.conf>=.5)).sort((a,b)=>b.danger-a.danger)[0];
-    if(sure&&(S.ph==='elim'||sure.conf>=.8))return{t:'accuse',who:sure.j,f:sure.f};
-    if(S.ph==='elim'){const g=G.sort((a,b)=>b.danger-a.danger)[0];return g?{t:'accuse',who:g.j,f:g.f}:{t:'skip'}}
-    // with a full kit, aim for the embassy using cards
-    if(full(P)){const tgt=AL+P.f;for(let c=0;c<P.cards.length;c++){for(const al of [true,false]){const pt=path(P.pos,P.cards[c],al);if(pt[pt.length-1]===tgt)return{t:'card',i:c}}}}
-    if(P.cards.length&&Math.random()<.25){return{t:'card',i:Math.random()*P.cards.length|0}}
+function turn(S){if(S.win!=null)return null;return S.ph==='swap'&&S.sw?S.sw.by:S.cur}
+/* ---------- bots: read the public scorecards ---------- */
+const WT={pw:1,dg:2,cb:3,ky:4};
+function guess(S,i){const res=[];const me=S.p[i];
+  for(let j=0;j<S.n;j++){if(j===i||S.p[j].out)continue;const Q=S.p[j];const cnt=Array(6).fill(0);Q.it.forEach(x=>cnt[+x[2]]+=WT[x.slice(0,2)]);
+    if(me.f>=0)cnt[me.f]=-99;S.feed.forEach(e=>{if(e.k==='hit')cnt[e.f]-=50;if(e.k==='miss'&&e.j===j)cnt[e.f]=-99});
+    const mx=Math.max(...cnt);const tops=cnt.map((v,f)=>v===mx?f:-1).filter(f=>f>=0);const pos=cnt.filter(v=>v>0);const tot=pos.reduce((a,b)=>a+b,0);
+    const kit=IK.filter(k=>has(Q,k,tops[0])).length;
+    res.push({j,f:tops[0],conf:tops.length===1&&mx>0?mx/Math.max(1,tot):0,kit,alley:inAlley(Q)})}return res}
+function bot(S,i){const P=S.p[i];
+  if(S.ph==='swap'){const opts=S.sw.opts;let best=-1,bv=IK.filter(k=>has(P,k,P.f)).length;opts.forEach((f,k)=>{const v=IK.filter(x=>has(P,x,f)).length;if(v>bv){bv=v;best=k}});return{t:'swap',k:best}}
+  const G=guess(S,i);
+  if(S.ph==='elim'){const g=G.filter(x=>x.alley).map(x=>[x.j,x.f]);return g.length?{t:'elim',g}:{t:'skip'}}
+  if(S.ph==='move'){
+    const danger=G.filter(g=>(g.conf>=.7&&g.kit>=3)||(g.alley&&g.kit>=4&&g.conf>=.5)).sort((a,b)=>b.kit-a.kit)[0];
+    if(danger)return{t:'accuse',who:danger.j,f:danger.f};
+    if(complete(P)){const tgt=EMBP[P.f];for(let c=0;c<P.cards.length;c++){const pt=path(P.pos,P.cards[c],true);if(pt[pt.length-1]===tgt)return{t:'card',i:c}}}
+    if(P.cards.length&&Math.random()<.2)return{t:'card',i:Math.random()*P.cards.length|0};
     return{t:'roll'}}
-  if(S.ph==='fork')return{t:'fork',alley:full(P)||Math.random()<.2};
-  if(S.ph==='buy'){const opts=S.pend.k.filter(k=>!has(P,k,P.f)&&(S.pend.free||P.m>=IT[k].c));
-    if(opts.length&&(Math.random()<.78||S.pend.free))return{t:'buy',k:opts.sort((a,b)=>IT[b].c-IT[a].c)[0],f:P.f};
-    const dec=S.pend.k.filter(k=>S.pend.free||P.m>=IT[k].c+8);if(dec.length){const f=rnd([0,1,2,3,4,5].filter(f=>f!==P.f));const k=dec[0];if(!has(P,k,f))return{t:'buy',k,f}}
-    return{t:'skip'}}
-  if(S.ph==='conf'){for(let j=0;j<S.n;j++){if(j===i||S.p[j].out)continue;const x=S.p[j].it.find(x=>+x[2]===P.f&&!P.it.includes(x)&&P.m>=IT[x.slice(0,2)].c);if(x)return{t:'conf',who:j,x}}return{t:'skip'}}
+  if(S.ph==='fork'){if(complete(P))return{t:'fork',alley:true};const pt=path(P.pos,S.pend.k,true);const land=pt[pt.length-1];
+    if(land===AL)return{t:'fork',alley:Math.random()<.5};return{t:'fork',alley:Math.random()<.1}}
+  if(S.ph==='buy'){const pd=S.pend;
+    if(pd.kind==='pw'){const x='pw'+pd.f;return(pd.f===P.f||Math.random()<.45)?{t:'buy',x}:{t:'skip'}}
+    if(pd.kind==='multi'){const k=pd.k,c=IT[k].c;const xs=[];let m=P.m;if(!has(P,k,P.f)&&m>=c){xs.push(k+P.f);m-=c}
+      const dec=shuf([0,1,2,3,4,5].filter(f=>f!==P.f&&!has(P,k,f)));if(dec.length&&m-c>=Math.max(12,c)&&Math.random()<.55)xs.push(k+dec[0]);
+      return xs.length?{t:'buy',x:xs}:{t:'skip'}}
+    if(pd.kind==='black'){const need=missing(P).filter(k=>P.m>=IT[k].c).sort((a,b)=>IT[b].c-IT[a].c);if(need.length&&!complete(P))return{t:'buy',x:need[0]+P.f};return{t:'skip'}}}
+  if(S.ph==='conf'){for(let j=0;j<S.n;j++){if(j===i||S.p[j].out)continue;const Q=S.p[j];if(Q.w&&P.m>=WILD_CF+10&&!complete(P))return{t:'conf',who:j,x:'W'};const x=Q.it.find(x=>+x[2]===P.f&&!P.it.includes(x)&&P.m>=IT[x.slice(0,2)].cf);if(x)return{t:'conf',who:j,x}}return{t:'skip'}}
   return{t:'skip'}}
-function botFallback(S,i){return S.ph==='move'?{t:'roll'}:S.ph==='fork'?{t:'fork',alley:false}:{t:'skip'}}
-/* ---------- render ---------- */
-function cellXY(pos){if(pos>=AL)return[4,1+(pos-AL)];return ringXY(pos)}
-const SI={pw:0,dg:1,cb:2,ky:3,cash5:4,cash10:5,gift:6,black:7,conf:8,elim:9,card:10,tax:11,start:12,fork:13};
+function botFallback(S,i){return S.ph==='move'?{t:'roll'}:S.ph==='fork'?{t:'fork',alley:false}:S.ph==='swap'?{t:'swap',k:-1}:{t:'skip'}}
+/* ---------- board geometry: 6 x 8 ring like the real board ---------- */
+const CW=100/6,RH=100/8,AH=62.5/6,RW=100/9;
+function ringCR(i){if(i<=5)return[i,0];if(i<=12)return[5,i-5];if(i<=17)return[5-(i-12),7];return[0,7-(i-17)]}
+function XY(pos){if(pos>=AL){const k=pos-AL;if(k<=5)return[3.5*CW,87.5-AH*(k+.5)];return[50-RW*(k-5-.5),87.5-AH*5.5]}const [c,r]=ringCR(pos);return[(c+.5)*CW,(r+.5)*RH]}
+function WH(pos){if(pos>=AL){const k=pos-AL;return k<=5?[12.4,AH-.9]:[RW-.9,AH-.9]}return[CW-.9,RH-.9]}
 const SPYI=()=>(typeof BART!=='undefined'&&BART.spy)||[];
-const ITI={pw:0,dg:1,cb:2,ky:3};
-const CAT={pw:'shop',dg:'shop',cb:'shop',ky:'shop',cash5:'cash',cash10:'cash',gift:'gold',black:'dark',conf:'purple',elim:'danger',card:'blue',tax:'danger',start:'hq',fork:'fork'};
-const SHORT={start:'HQ',pw:'Password',dg:'Disguise',cb:'Codebook',ky:'Key',cash5:'+$5',cash10:'+$10',fork:'Alley',card:'Move card',conf:'Seize',black:'Black mkt',elim:'Eliminate',tax:'Bribe',gift:'Gift'};
-const SQ=(()=>{const L=7,R=93,st=(R-L)/7,o=[];for(let i=0;i<28;i++){const side=Math.floor(i/7),k=i%7;if(side===0)o.push([R-k*st,R]);else if(side===1)o.push([L,R-k*st]);else if(side===2)o.push([L+k*st,L]);else o.push([R,L+k*st])}return o})();
-const AX=SQ[FORK][0];const EXQ=[0,1,2,3,4,5].map(f=>[AX,78-f*11.2]);
-const XY=pos=>pos>=AL?EXQ[pos-AL]:SQ[pos];
+const ICO={pw:0,dg:1,cb:2,ky:3,cash10:4,cash20:5,gift:6,black:7,conf:8,elim:9,card:10,border:11,start:12,ent:13};
+const EMO={again:'🎲',back2:'⏪'};
+const LBL={start:['START','collect $15'],dg:['DISGUISES','$5 each'],cb:['CODE BOOKS','$15 each'],ky:['KEYS','$30 each'],card:['MOVE CARD',''],again:['TAKE ANOTHER TURN',''],gift:['FREE GIFT',''],cash10:['COLLECT $10',''],cash20:['COLLECT $20',''],black:['BLACK MARKET','one item only'],ent:['SPY ALLEY ENTRANCE','must enter if you land here'],border:['BORDER CROSSING','pay $5'],back2:['MOVE BACK','2 spaces'],elim:['SPY ELIMINATOR','free guess of all players in Spy Alley'],conf:['CONFISCATE MATERIALS','pw $5 · dg $5 · cb $10 · key $25 · wild $50']};
+const flag=(f,cls)=>`<i class="sa-flag ${cls||''}" style="background:${FAC[f].fl}"></i>`;
+function tileHTML(pos){const s=sp(pos);const [x,y]=XY(pos),[w,h]=WH(pos);const SP=SPYI();const st=`left:${x}%;top:${y}%;width:${w}%;height:${h}%`;
+  if(s.k==='pw')return`<div class="sa-t pw" style="${st};--fc:${FAC[s.f].c}"><b>${FAC[s.f].n.toUpperCase()}</b><div class="sa-ic">${SP[0]?`<img src="${SP[0]}" alt="">`:'✎'}${flag(s.f,'badge')}</div><em>password $1</em></div>`;
+  if(s.k==='emb')return`<div class="sa-t emb" style="${st};--fc:${FAC[s.f].c}"><b>${FAC[s.f].n.toUpperCase()} EMBASSY</b><div class="sa-house">${flag(s.f)}</div></div>`;
+  const [a,b]=LBL[s.k]||[s.k,''];const ic=ICO[s.k]!=null&&SP[ICO[s.k]]?`<img src="${SP[ICO[s.k]]}" alt="">`:(EMO[s.k]||'');
+  return`<div class="sa-t k-${s.k}${pos>=AL?' al':''}" style="${st}"><b>${a}</b><div class="sa-ic">${ic}</div>${b?`<em>${b}</em>`:''}${s.k==='start'?'<i class="sa-arrow">➜</i>':''}</div>`}
 const DIEP={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
 function dieHTML(n,cls){return`<div class="da-die3 ${cls||''}">${[...Array(9)].map((_,i)=>`<i class="${DIEP[n].includes(i)?'on':''}"></i>`).join('')}</div>`}
-function render(box,S,ctx){const me=ctx.seat;const SP=SPYI();
-  if(!box.querySelector('.da-board2')){const MAPU=(typeof BART!=='undefined'&&BART.eumap)||'';
-    const seg=(a,b,c)=>{const [x1,y1]=XY(a),[x2,y2]=XY(b);return `<line class="${c}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`};
-    let lines='';for(let i=0;i<28;i++)lines+=seg(i,(i+1)%28,'rt');lines+=seg(FORK,AL,'al');for(let f=0;f<5;f++)lines+=seg(AL+f,AL+f+1,'al');lines+=seg(AL+5,EXIT,'al');
-    let h=`<div class="da-board2 sq"><div class="da-center" style="background-image:url(${MAPU})"></div><div class="da-logo"><b>DOUBLE AGENT</b><small>Spy Alley ⤵</small></div><svg class="da-routes" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg>`;
-    for(let i=0;i<28;i++){const [x,y]=XY(i);const t=T[i];h+=`<div class="da-tile c-${CAT[t]}${i===0?' corner':''}" style="left:${x}%;top:${y}%" title="${CITY[i]} · ${TN[t]}"><div class="da-ic">${SP[SI[t]]?`<img src="${SP[SI[t]]}" alt="">`:TG[t]}</div><span><b>${CITY[i]}</b><em>${SHORT[t]}</em></span></div>`}
-    for(let f=0;f<6;f++){const [x,y]=XY(AL+f);h+=`<div class="da-tile emb" style="left:${x}%;top:${y}%;--fc:${FAC[f].c}" title="${FAC[f].n} embassy in ${EMB[f]}"><div class="da-ic emb">${FAC[f].g}</div><span><b>${EMB[f]}</b><em>${FAC[f].n} embassy</em></span></div>`}
-    h+=`<div class="da-hud"><div class="da-dieslot"></div><div class="da-msg"></div></div><div class="da-toks"></div></div>`;
+function render(box,S,ctx){const me=ctx.seat;
+  if(!box.querySelector('.sa-board')){const MAPU=(typeof BART!=='undefined'&&BART.eumap)||'';
+    const pts=[ENT,...ALY.map((_,k)=>AL+k),EXIT].map(p=>XY(p).join(',')).join(' ');
+    let h=`<div class="sa-board"><div class="sa-inner" style="background-image:url(${MAPU})"></div><div class="sa-title">SPY ALLEY</div><div class="sa-tag">Suspense &amp; intrigue</div>
+      <svg class="sa-path" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="${pts}"/></svg>`;
+    for(let i=0;i<N;i++)h+=tileHTML(i);for(let k=0;k<ALY.length;k++)h+=tileHTML(AL+k);
+    h+=`<div class="sa-hud"><div class="sa-dieslot"></div><div class="sa-msg"></div></div><div class="sa-toks"></div></div>`;
     box.innerHTML=h;box.__pos={}}
-  const B=box.querySelector('.da-board2');
-  // tokens: absolute, animate step by step along the path they walked
-  const tk=B.querySelector('.da-toks');const cnt={};
+  const B=box.querySelector('.sa-board');const tk=B.querySelector('.sa-toks');const cnt={};
   S.p.forEach((P,i)=>{let t=tk.querySelector(`[data-p="${i}"]`);if(P.out){if(t)t.remove();return}
-    if(!t){t=document.createElement('div');t.className='da-tk';t.dataset.p=i;t.style.setProperty('--pc',ctx.col(i));t.innerHTML=`<i class="bav" style="background-image:url(${(typeof BART!=='undefined'&&BART.spies2&&BART.spies2[i%6])||''})"></i>`;tk.append(t)}
-    t.classList.toggle('cur',S.cur===i&&S.win==null);
-    const key=P.pos;const n=cnt[key]=(cnt[key]||0)+1;const off=(n-1)*1.6;
-    const go=pos=>{const [x,y]=XY(pos);t.style.left=(x+off*.6)+'%';t.style.top=(y-off)+'%'};
+    if(!t){t=document.createElement('div');t.className='sa-tk';t.dataset.p=i;t.style.setProperty('--pc',ctx.col(i));t.innerHTML=`<i class="bav" style="background-image:url(${(typeof BART!=='undefined'&&BART.spies2&&BART.spies2[i%6])||''})"></i>`;tk.append(t)}
+    t.classList.toggle('cur',turn(S)===i);
+    const n=cnt[P.pos]=(cnt[P.pos]||0)+1;const off=(n-1);
+    const go=pos=>{const [x,y]=XY(pos);t.style.left=(x+off*2.2-1.1*(n>1))+'%';t.style.top=(y-off*1.2)+'%'};
     const prev=box.__pos[i];
-    if(prev!=null&&prev!==P.pos&&S.mv&&S.mv.i===i&&S.mv.a!==box.__mva){box.__mva=S.mv.a;const trail=S.mv.trail.slice();let k=0;clearInterval(t.__iv);
-      t.__iv=setInterval(()=>{if(k>=trail.length){clearInterval(t.__iv);t.classList.remove('hop');go(P.pos);return}t.classList.remove('hop');void t.offsetWidth;t.classList.add('hop');go(trail[k++]);BRD.snd('sel')},170)}
+    if(prev!=null&&prev!==P.pos&&S.mv&&S.mv.i===i&&S.mv.a!==t.__mva){t.__mva=S.mv.a;const trail=S.mv.trail.slice();let k=0;clearInterval(t.__iv);
+      t.__iv=setInterval(()=>{if(k>=trail.length){clearInterval(t.__iv);t.classList.remove('hop');go(P.pos);return}t.classList.remove('hop');void t.offsetWidth;t.classList.add('hop');go(trail[k++]);try{BRD.snd('sel')}catch(e){}},170)}
     else if(prev!==P.pos||!t.style.left)go(P.pos);
     box.__pos[i]=P.pos});
-  if(S.roll&&B.dataset.ra!==String(S.anim)){B.dataset.ra=S.anim;B.querySelector('.da-dieslot').innerHTML=dieHTML(S.roll.k,'roll');BRD.snd(S.roll.by==='card'?'move':'dice')}
-  const last=(S.feed[0]&&S.feed[0].a===S.anim)?S.feed[0]:null;
-  B.querySelector('.da-msg').textContent=S.win!=null?'':S.ph==='fork'?'Fork! Spy Alley or keep walking?':S.ph==='buy'?'Shopping…':S.ph==='elim'?'☠ Spy Eliminator':S.ph==='conf'?'Confiscate!':S.cur===me?'Your turn':ctx.nm(S.cur)+' to move';}
-function gearIcon(k,f,got){const SP=SPYI();return el('span',{class:'da-gear'+(got?' got':''),style:`--fc:${FAC[f].c}`,title:FAC[f].n+' '+IT[k].n},SP[ITI[k]]?el('img',{src:SP[ITI[k]],alt:''}):IT[k].g)}
-function side(S,ctx){const me=ctx.seat;const k=[];const P=me!=null?S.p[me]:null;const A=ctx.act;
-  const dossierReady=!!(P&&P.f>=0&&FAC[P.f]);
-  if(P&&!P.out&&!dossierReady)k.push(el('div',{class:'bg-panel'},el('h3',{},'🔐 Opening your secret dossier…'),el('p',{class:'muted'},'Your encrypted faction is arriving. This normally takes a moment.')));
-  if(P&&!P.out&&dossierReady){const f=FAC[P.f];
-    k.push(el('div',{class:'da-mission',style:`--fc:${f.c}`},el('div',{class:'da-mhead'},el('small',{},'TOP SECRET · your faction'),el('h3',{},el('span',{class:'da-emb'},f.g),f.n),el('b',{class:'da-cash'},'$'+P.m)),
+  if(S.roll&&B.dataset.ra!==String(S.roll.a)){B.dataset.ra=S.roll.a;B.querySelector('.sa-dieslot').innerHTML=S.roll.by==='card'?`<div class="sa-mcard"><b>${S.roll.k}</b><i>move card</i></div>`:dieHTML(S.roll.k,'roll');try{BRD.snd(S.roll.by==='card'?'move':'dice')}catch(e){}}
+  const who=turn(S);
+  B.querySelector('.sa-msg').textContent=S.win!=null?'':S.ph==='fork'?'Spy Alley or the street?':S.ph==='buy'?'Shopping…':S.ph==='elim'?'☠ Spy Eliminator':S.ph==='conf'?'Confiscate materials!':S.ph==='swap'?'Choosing an identity…':who===me?'Your turn':ctx.nm(who)+' to move'}
+/* ---------- side panel ---------- */
+const flagEl=f=>el('i',{class:'sa-flag',style:`background:${FAC[f].fl}`});
+function gearIcon(k,f,got){const SP=SPYI();const ix={pw:0,dg:1,cb:2,ky:3}[k];return el('span',{class:'da-gear'+(got?' got':''),style:`--fc:${FAC[f].c}`,title:FAC[f].n+' '+IT[k].n},SP[ix]?el('img',{src:SP[ix],alt:''}):IT[k].n[0])}
+function scorecard(Q){return el('div',{class:'sa-score'},el('span'),FAC.map(f=>el('i',{class:'sa-sh',style:`--fc:${f.c}`,title:f.n},f.n.slice(0,2))),
+  IK.map(k=>[el('small',{},{pw:'PW',dg:'DG',cb:'CB',ky:'KEY'}[k]),FAC.map((f,fi)=>el('i',{class:'sa-peg'+(has(Q,k,fi)?' on':''),style:`--fc:${f.c}`}))]).flat(2))}
+function side(S,ctx){const me=ctx.seat;const k=[];const P=me!=null?S.p[me]:null;const A=ctx.act;const ready=!!(P&&P.f>=0&&FAC[P.f]);
+  if(P&&!P.out&&!ready)k.push(el('div',{class:'bg-panel'},el('h3',{},'🔐 Opening your secret ID card…'),el('p',{class:'muted'},'Your encrypted identity is arriving.')));
+  if(P&&!P.out&&ready){const f=FAC[P.f];const miss=missing(P);
+    k.push(el('div',{class:'da-mission',style:`--fc:${f.c}`},el('div',{class:'da-mhead'},el('small',{},'TOP SECRET · your spy ID'),el('h3',{},flagEl(P.f),f.n+' spy'),el('b',{class:'da-cash'},'$'+P.m)),
       el('div',{class:'da-kit2'},IK.map(x=>el('div',{class:'da-slot'+(has(P,x,P.f)?' got':'')},gearIcon(x,P.f,has(P,x,P.f)),el('small',{},IT[x].n),el('b',{},'$'+IT[x].c)))),
-      el('p',{class:'da-goal'},full(P)?'Kit complete! Take Spy Alley and land on the '+f.n+' embassy.':'Collect all 4 in '+f.n+', then land exactly on your embassy.'),
-      P.cards.length?el('div',{class:'da-mcards'},el('small',{},'Move cards'),P.cards.map((v,i)=>el('button',{class:'da-mc',type:'button',disabled:!(ctx.canAct&&S.ph==='move'),onclick:()=>A({t:'card',i})},el('b',{},String(v)),el('i',{},'steps')))):null))}
-  if(ctx.canAct&&P&&dossierReady){
-    if(S.ph==='move')k.push(el('div',{class:'bg-panel da-act'},el('button',{class:'cz-btn blue big da-roll',type:'button',onclick:()=>A({t:'roll'})},'🎲 Roll the die'),P.cards.length?el('small',{},'…or tap a move card above to pick your exact steps.'):null,accuseBox(S,ctx,false)));
-    if(S.ph==='fork')k.push(el('div',{class:'bg-panel da-act'},el('h3',{},'Fork in the road · '+S.pend.k+' steps'),el('div',{class:'da-choice'},el('button',{class:'da-big purple',type:'button',onclick:()=>A({t:'fork',alley:true})},el('b',{},'Spy Alley'),el('small',{},full(P)?'Your kit is complete — head for your embassy.':'You may enter, but you still need all four items to win.')),el('button',{class:'da-big',type:'button',onclick:()=>A({t:'fork',alley:false})},el('b',{},'Keep walking'),el('small',{},'Stay on the main loop.')))));
-    if(S.ph==='buy'){const fs=typeof ctx.sel==='number'?ctx.sel:P.f;
-      k.push(el('div',{class:'bg-panel da-act'},el('h3',{},S.pend.free?'🎁 Free gift':'🛒 Shop'),el('small',{},'Pick a color. Buying other colors hides yours.'),
-        el('div',{class:'da-facs'},FAC.map((f,i)=>el('button',{class:'da-f'+(fs===i?' on':''),type:'button',style:`--fc:${f.c}`,title:f.n,onclick:()=>ctx.setSel(i)},f.g))),
-        el('div',{class:'da-shop'},S.pend.k.map(x=>{const own=has(P,x,fs);const poor=!S.pend.free&&P.m<IT[x].c;return el('button',{class:'da-item',type:'button',disabled:own||poor,style:`--fc:${FAC[fs].c}`,onclick:()=>A({t:'buy',k:x,f:fs})},gearIcon(x,fs,true),el('b',{},IT[x].n),el('small',{},own?'owned':S.pend.free?'FREE':'$'+IT[x].c))})),
-        el('button',{class:'cz-btn sm ghost',type:'button',onclick:()=>A({t:'skip'})},'Pass')))}
-    if(S.ph==='conf'){const opts=[];S.p.forEach((Q,j)=>{if(j===me||Q.out)return;Q.it.forEach(x=>{const kk=x.slice(0,2),f=+x[2];opts.push(el('button',{class:'da-item',type:'button',style:`--fc:${FAC[f].c}`,disabled:P.m<IT[kk].c||P.it.includes(x),onclick:()=>A({t:'conf',who:j,x})},gearIcon(kk,f,true),el('b',{},ctx.nm(j)),el('small',{},'$'+IT[kk].c)))})});
-      k.push(el('div',{class:'bg-panel da-act'},el('h3',{},'✋ Confiscate'),el('small',{},'Take any item. You pay its owner the price.'),el('div',{class:'da-shop'},opts),el('button',{class:'cz-btn sm ghost',type:'button',onclick:()=>A({t:'skip'})},'Skip')))}
-    if(S.ph==='elim')k.push(el('div',{class:'bg-panel da-act danger'},el('h3',{},'☠ Spy Eliminator'),el('small',{},'Free shot: if you’re wrong, nothing happens.'),accuseBox(S,ctx,true),el('button',{class:'cz-btn sm ghost',type:'button',onclick:()=>A({t:'skip'})},'Skip')))}
-  k.push(el('div',{class:'bg-panel'},el('h3',{},'Dossiers'),S.p.map((Q,j)=>el('div',{class:'da-dos2'+(Q.out?' out':'')+(S.cur===j?' cur':''),style:`--pc:${ctx.col(j)}`},el('i',{class:'bav',style:`background-image:var(--ch-gut-${j%8})`}),
-    el('div',{},el('b',{},ctx.nm(j)+(j===me?' (you)':'')),el('small',{},Q.out?'BURNED':'$'+Q.m+' · '+Q.cards.length+' move cards'),el('div',{class:'da-items'},Q.it.length?Q.it.slice().sort().map(x=>gearIcon(x.slice(0,2),+x[2],true)):el('small',{class:'muted'},'no gear yet')))))));
+      P.w?el('p',{class:'sa-wild'},'🃏 Wild cards: '+P.w+' (count as any item — nobody knows which)'):null,
+      el('p',{class:'da-goal'},complete(P)?'Kit complete! Get into Spy Alley and land EXACTLY on the '+f.n+' embassy.':'Need: '+miss.map(x=>IT[x].n).join(', ')+(P.w?' (wilds cover '+Math.min(P.w,miss.length)+')':'')+'. Then land exactly on your embassy.'),
+      P.cards.length?el('div',{class:'da-mcards'},el('small',{},'Move cards (face up — everyone sees them). Use one instead of rolling:'),P.cards.map((v,i)=>el('button',{class:'da-mc',type:'button',disabled:!(ctx.canAct&&S.ph==='move'),onclick:()=>A({t:'card',i})},el('b',{},String(v)),el('i',{},'spaces')))):null))}
+  if(ctx.canAct&&P&&ready){
+    if(S.ph==='move'){const forced=P.pos===ENT;k.push(el('div',{class:'bg-panel da-act'},el('button',{class:'cz-btn blue big da-roll',type:'button',onclick:()=>A({t:'roll'})},'🎲 Roll the die'),
+      forced?el('small',{class:'sa-warn'},'You’re on the entrance — this move goes INTO Spy Alley.'):null,
+      P.cards.length?el('small',{},'…or tap a move card above.'):null,accuseBox(S,ctx)))}
+    if(S.ph==='fork'){const kk=S.pend.k;const pa=path(P.pos,kk,true),ps=path(P.pos,kk,false);const lbl=p=>{const s=sp(p);return s.k==='pw'?FAC[s.f].n+' password':s.k==='emb'?FAC[s.f].n+' embassy':(LBL[s.k]||[s.k])[0].toLowerCase()};
+      const bc=ps[ps.length-1]===BORDER&&P.m<5;
+      k.push(el('div',{class:'bg-panel da-act'},el('h3',{},'Spy Alley entrance · moving '+kk),el('div',{class:'da-choice'},
+        el('button',{class:'da-big purple',type:'button',onclick:()=>A({t:'fork',alley:true})},el('b',{},'Enter Spy Alley'),el('small',{},'Lands on: '+lbl(pa[pa.length-1]))),
+        el('button',{class:'da-big',type:'button',onclick:()=>A({t:'fork',alley:false})},el('b',{},'Keep walking'),el('small',{},bc?'Border needs $5 — you’ll be forced into the alley':'Lands on: '+lbl(ps[ps.length-1]))))))}
+    if(S.ph==='buy')k.push(buyBox(S,ctx,P));
+    if(S.ph==='conf'){const opts=[];S.p.forEach((Q,j)=>{if(j===me||Q.out)return;Q.it.forEach(x=>{const kk=x.slice(0,2),f=+x[2];const c=IT[kk].cf;opts.push(el('button',{class:'da-item',type:'button',style:`--fc:${FAC[f].c}`,disabled:P.m<c||P.it.includes(x),onclick:()=>A({t:'conf',who:j,x})},gearIcon(kk,f,true),el('b',{},ctx.nm(j)),el('small',{},FAC[f].n+' · $'+c)))});
+        if(Q.w)opts.push(el('button',{class:'da-item',type:'button',style:'--fc:#ffd23f',disabled:P.m<WILD_CF,onclick:()=>A({t:'conf',who:j,x:'W'})},el('span',{class:'da-gear sa-wildg'},'🃏'),el('b',{},ctx.nm(j)),el('small',{},'Wild · $'+WILD_CF)))});
+      k.push(el('div',{class:'bg-panel da-act'},el('h3',{},'✋ Confiscate materials'),el('small',{},'Take ONE item from one player. You pay them: password $5, disguise $5, code book $10, key $25, wild card $50.'),el('div',{class:'da-shop'},opts),el('button',{class:'cz-btn sm ghost',type:'button',onclick:()=>A({t:'skip'})},'Skip')))}
+    if(S.ph==='elim')k.push(elimBox(S,ctx));
+    if(S.ph==='swap'&&S.sw&&S.sw.by===me){const opts=S.sw.opts||[];
+      k.push(el('div',{class:'bg-panel da-act'},el('h3',{},'🪪 Spy ID card received'),el('small',{},'You took over a burned spy’s ID card. Keep yours or secretly switch. Nobody sees what you pick.'),
+        el('div',{class:'da-choice'},el('button',{class:'da-big',type:'button',onclick:()=>A({t:'swap',k:-1})},el('b',{},'Keep '+FAC[P.f].n),el('small',{},IK.filter(x=>has(P,x,P.f)).length+'/4 items')),
+          opts.map((f,i)=>el('button',{class:'da-big purple',type:'button',onclick:()=>A({t:'swap',k:i})},el('b',{},'Switch to '+FAC[f].n),el('small',{},IK.filter(x=>has(P,x,f)).length+'/4 items'))))))}}
+  k.push(el('div',{class:'bg-panel'},el('h3',{},'Scorecards (public)'),S.p.map((Q,j)=>el('div',{class:'da-dos2 sa-dos'+(Q.out?' out':'')+(turn(S)===j?' cur':''),style:`--pc:${ctx.col(j)}`},el('i',{class:'bav',style:`background-image:url(${(typeof BART!=='undefined'&&BART.spies2&&BART.spies2[j%6])||''})`}),
+    el('div',{},el('b',{},ctx.nm(j)+(j===me?' (you)':'')+(Q.pos>=AL&&!Q.out?' · in Spy Alley':'')),el('small',{},Q.out?'ELIMINATED':'$'+Q.m+(Q.cards.length?' · move cards '+Q.cards.join(', '):'')+(Q.w?' · 🃏×'+Q.w:'')),Q.out?null:scorecard(Q))))));
   return k}
-function accuseBox(S,ctx,safe){const me=ctx.seat;const st=ctx.sel&&ctx.sel.acc?ctx.sel:{acc:1,who:null,f:null};
-  const rivals=S.p.map((Q,j)=>j).filter(j=>j!==me&&!S.p[j].out&&(!safe||Q.pos>=AL));
-  const body=[el('small',{},'1. Who?'),el('div',{class:'da-rivals'},rivals.map(j=>el('button',{class:'da-rv'+(st.who===j?' on':''),type:'button',style:`--pc:${ctx.col(j)}`,onclick:()=>ctx.setSel({...st,who:j})},el('i',{class:'bav',style:`background-image:var(--ch-gut-${j%8})`}),el('b',{},ctx.nm(j))))),
-    el('small',{},'2. Which faction?'),el('div',{class:'da-facs'},FAC.map((f,i)=>el('button',{class:'da-f'+(st.f===i?' on':''),type:'button',title:f.n,style:`--fc:${f.c}`,onclick:()=>ctx.setSel({...st,f:i})},f.g))),
-    el('button',{class:'cz-btn red',type:'button',disabled:st.who==null||st.f==null,onclick:()=>ctx.act({t:'accuse',who:st.who,f:st.f})},st.who!=null&&st.f!=null?'Accuse '+ctx.nm(st.who)+' of '+FAC[st.f].n:'Accuse')];
-  if(safe)return el('div',{class:'da-acc2'},body);
-  return el('details',{class:'da-acc2',open:st.who!=null||st.f!=null},el('summary',{},'🕵️ Accuse a spy (wrong = you’re out)'),body)}
-/* Keep factions private in online rooms. Only the owner receives their faction
-   through the encrypted per-player payload; the public room state gets -1. */
-function pack(S){const P=JSON.parse(JSON.stringify(S));if(S.win==null)P.p.forEach(q=>q.f=-1);return P}
-function privFor(S,p){return{p,f:S.p[p].f}}
-function unpack(P,pv){const S=JSON.parse(JSON.stringify(P));if(pv&&pv.p!=null&&S.p[pv.p])S.p[pv.p].f=pv.f;return S}
-BRD.reg({id:'agent',name:'Double Agent',like:'Secret spy race',blurb:'Everyone is a secret agent. Buy the gear, hide your colors, unmask the others.',col:'#8a49c9',min:2,max:6,def:4,hidden:true,
-  art:'<div class="art-agent"><i style="--fc:#e0373f">◆</i><i style="--fc:#2e7ad6">●</i><i style="--fc:#2f9e62">▲</i><b>?</b></div>',
-  rules:['You secretly belong to one of six factions. Nobody else knows which. Each spy starts with $10 per player.','Walk the loop and buy gear at the official prices: Password $1, Disguise $5, Codebook $15, Key $30. You can buy any color, so buy decoys to hide yours. Passing HQ earns $15.','You may take the Spy Alley turn-off at the entrance. Own all four items in your color and land exactly on your embassy to win.','Instead of moving, you can accuse a rival of a faction. Right: they’re out and you take their cash and gear. Wrong: you’re out. The last spy standing also wins.','The Spy Eliminator gives one risk-free accusation against a spy currently inside Spy Alley. Move cards let you choose your exact step count.'],
-  init,turn,apply,bot,botFallback,render,side,pack,unpack,privFor,
-  badge:(S,i)=>S.p[i].out?'Burned':S.p[i].it.length+' items',
-  phaseName:S=>({move:'Roll or play a card',fork:'Fork in the road',buy:'Shopping',conf:'Confiscate',elim:'Spy Eliminator'})[S.ph]||''});
+function buyBox(S,ctx,P){const A=ctx.act;const pd=S.pend;
+  if(pd.kind==='pw'){const x='pw'+pd.f;return el('div',{class:'bg-panel da-act'},el('h3',{},'✎ '+FAC[pd.f].n+' password'),el('small',{},'Only this country’s password is sold here.'),
+    el('div',{class:'da-shop'},el('button',{class:'da-item',type:'button',style:`--fc:${FAC[pd.f].c}`,onclick:()=>A({t:'buy',x})},gearIcon('pw',pd.f,true),el('b',{},'Buy'),el('small',{},'$1'))),el('button',{class:'cz-btn sm ghost',type:'button',onclick:()=>A({t:'skip'})},'Pass'))}
+  if(pd.kind==='multi'){const kk=pd.k,c=IT[kk].c;const sel=(ctx.sel&&ctx.sel.buy)||[];const tot=sel.length*c;
+    return el('div',{class:'bg-panel da-act'},el('h3',{},'🛒 '+IT[kk].n+'s · $'+c+' each'),el('small',{},'Buy as many as you can afford, any countries. Decoys hide your identity.'),
+      el('div',{class:'da-shop'},FAC.map((f,fi)=>{const x=kk+fi,own=has(P,kk,fi),on=sel.includes(x);return el('button',{class:'da-item'+(on?' on':''),type:'button',disabled:own||(!on&&tot+c>P.m),style:`--fc:${f.c}`,onclick:()=>ctx.setSel({buy:on?sel.filter(y=>y!==x):[...sel,x]})},gearIcon(kk,fi,true),el('b',{},f.n),el('small',{},own?'owned':on?'✔ selected':'$'+c))})),
+      el('div',{class:'row'},el('button',{class:'cz-btn green',type:'button',disabled:!sel.length,onclick:()=>A({t:'buy',x:sel})},sel.length?'Buy '+sel.length+' for $'+tot:'Select items'),el('button',{class:'cz-btn sm ghost',type:'button',onclick:()=>A({t:'skip'})},'Pass')))}
+  return el('div',{class:'bg-panel da-act'},el('h3',{},'💼 Black market'),el('small',{},'Buy any ONE item at the scorecard price.'),
+    el('div',{class:'sa-bm'},IK.map(kk=>FAC.map((f,fi)=>{const own=has(P,kk,fi);return el('button',{class:'sa-bmi',type:'button',title:f.n+' '+IT[kk].n+' $'+IT[kk].c,disabled:own||P.m<IT[kk].c,style:`--fc:${f.c}`,onclick:()=>A({t:'buy',x:kk+fi})},gearIcon(kk,fi,!own),el('small',{},'$'+IT[kk].c))})).flat()),
+    el('button',{class:'cz-btn sm ghost',type:'button',onclick:()=>A({t:'skip'})},'Pass'))}
+function facRow(cur,on){return el('div',{class:'da-facs'},FAC.map((f,i)=>el('button',{class:'da-f sa-ff'+(cur===i?' on':''),type:'button',title:f.n,style:`--fc:${f.c}`,onclick:()=>on(i)},flagEl(i))))}
+function accuseBox(S,ctx){const me=ctx.seat;const st=ctx.sel&&ctx.sel.acc?ctx.sel:{acc:1,who:null,f:null};
+  const rivals=S.p.map((Q,j)=>j).filter(j=>j!==me&&!S.p[j].out);
+  const body=[el('small',{},'Instead of moving, name ONE spy’s country. Right: they’re out and you take their cash, cards, items and ID card. Wrong: YOU’RE out and they take yours.'),el('small',{},'1. Who?'),el('div',{class:'da-rivals'},rivals.map(j=>el('button',{class:'da-rv'+(st.who===j?' on':''),type:'button',style:`--pc:${ctx.col(j)}`,onclick:()=>ctx.setSel({...st,who:j})},el('b',{},ctx.nm(j))))),
+    el('small',{},'2. Which country?'),facRow(st.f,i=>ctx.setSel({...st,f:i})),
+    el('button',{class:'cz-btn red',type:'button',disabled:st.who==null||st.f==null,onclick:()=>ctx.act({t:'accuse',who:st.who,f:st.f})},st.who!=null&&st.f!=null?'Accuse '+ctx.nm(st.who)+' of being '+FAC[st.f].n:'Accuse')];
+  return el('details',{class:'da-acc2',open:st.who!=null||st.f!=null},el('summary',{},'🕵️ Guess a spy’s identity (wrong = you’re out)'),body)}
+function elimBox(S,ctx){const me=ctx.seat;const g=(ctx.sel&&ctx.sel.eg)||{};const tg=S.p.map((Q,j)=>j).filter(j=>j!==me&&!S.p[j].out&&inAlley(S.p[j]));
+  return el('div',{class:'bg-panel da-act danger'},el('h3',{},'☠ Spy Eliminator'),el('small',{},'Free guess at EVERY player in Spy Alley. Wrong guesses cost you nothing.'),
+    tg.map(j=>el('div',{class:'sa-eg'},el('b',{},ctx.nm(j)),facRow(g[j],f=>{const n={...g};if(n[j]===f)delete n[j];else n[j]=f;ctx.setSel({eg:n})}))),
+    el('div',{class:'row'},el('button',{class:'cz-btn red',type:'button',disabled:!Object.keys(g).length,onclick:()=>ctx.act({t:'elim',g:Object.entries(g).map(([j,f])=>[+j,f])})},'Fire!'),el('button',{class:'cz-btn sm ghost',type:'button',onclick:()=>ctx.act({t:'skip'})},'Skip')))}
+/* hidden info: faction, decks and pending ID cards stay off the public channel */
+function pack(S){const P=JSON.parse(JSON.stringify(S));if(S.win==null)P.p.forEach(q=>q.f=-1);P.gift=S.gift.length;P.mdeck=S.mdeck.length;if(P.sw)P.sw={by:S.sw.by,opts:[]};return P}
+function privFor(S,p){return{p,f:S.p[p].f,sw:S.sw&&S.sw.by===p?S.sw.opts:null}}
+function unpack(P,pv){const S=JSON.parse(JSON.stringify(P));if(pv&&pv.p!=null&&S.p[pv.p]){S.p[pv.p].f=pv.f;if(pv.sw&&S.sw&&S.sw.by===pv.p)S.sw.opts=pv.sw}return S}
+BRD.reg({id:'agent',name:'Spy Alley',like:'Secret spy race',blurb:'You are a secret spy. Collect your country’s gear, bluff with decoys, unmask the others.',col:'#7b3fc4',min:2,max:6,def:4,hidden:true,
+  art:'<div class="art-agent"><i style="--fc:#e0373f">◆</i><i style="--fc:#2a6fd6">●</i><i style="--fc:#1f9e4a">▲</i><b>?</b></div>',
+  rules:['You are secretly French, German, Spanish, Italian, American or Russian. Everyone starts with $10 × the number of players and on START. Pass or land on START: +$15.',
+    'Collect your country’s password ($1), disguise ($5), code book ($15) and key ($30). Password spaces only sell that country’s password. Disguise, code book and key spaces let you buy as many as you can afford, any country. Your scorecard is public, so buy decoys to hide who you are.',
+    'Black market: buy any one item. Free gift: draw a card, take that item free (unless you own it). 4 of them are WILD cards that count as any item and never have to be revealed. Move card: keep it face up and use it instead of rolling.',
+    'Collect $10 / $20, Take another turn, Move back 2 (straight onto the entrance), Border crossing: pay $5 — if you can’t, you must enter Spy Alley instead.',
+    'Passing the Spy Alley entrance you choose: enter or keep walking. Land ON the entrance and you MUST enter. Spy Alley is 9 spaces: Collect $20, Spy Eliminator, French & German embassies, Confiscate materials, then the Spanish, Italian, American and Russian embassies.',
+    'Spy Eliminator: free guess (no penalty) at every player in Spy Alley. Confiscate materials: take one item from one player and pay them (pw $5, disguise $5, code book $10, key $25, wild $50).',
+    'Instead of taking your turn you may guess one spy’s country. Right: they’re out. Wrong: you’re out. The survivor takes the loser’s money, cards, items and ID card, and may secretly switch identity.',
+    'WIN: own all 4 items of your country (wild cards fill gaps) and land exactly on your own embassy — or be the last spy standing.'],
+  init,turn,apply,bot,botFallback,render,side,pack,unpack,privFor,secretAct:a=>a&&a.t==='swap',
+  animMs:S=>S.mv&&S.mv.a===S.anim?S.mv.trail.length*170:0,
+  badge:(S,i)=>S.p[i].out?'Out':(S.p[i].it.length+S.p[i].w)+' items',
+  phaseName:S=>({move:'Roll, play a card or guess',fork:'Spy Alley entrance',buy:'Shopping',conf:'Confiscate',elim:'Spy Eliminator',swap:'Choosing identity'})[S.ph]||''});
 })();
 
 /* ===== MULTIPLAYER CARD TABLES: Blackjack + Hold'em (bots · pass & play · phones) ===== */
