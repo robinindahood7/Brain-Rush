@@ -1918,7 +1918,6 @@ body:not(.bg-max) .cq-pan .cq-real{height:min(78vh,820px)}
 ::view-transition-old(page),::view-transition-new(page){animation-duration:.28s}
 #bgfx{will-change:transform}
 .cz-back{display:none!important}
-#voiceBtn{display:none!important}
 .invite{display:flex;align-items:center;gap:14px;background:rgba(0,0,0,.35);border-radius:16px;padding:12px;margin-top:10px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.08)}
 .inv-qr{flex:none;width:166px;height:166px;padding:8px;border-radius:12px;background:#fff;box-shadow:0 5px 0 rgba(0,0,0,.4);animation:drop .5s cubic-bezier(.2,1.6,.4,1)}
 .inv-qr img,.inv-qr canvas{display:block;width:150px!important;height:150px!important;image-rendering:pixelated}
@@ -3021,7 +3020,7 @@ body.bg-max #bg-game .bg-wrap{grid-template-columns:minmax(0,1fr) 330px!importan
       <span class="hearts" id="hearts" hidden></span>
       <span class="spacer"></span>
       <span class="combo" id="combo" aria-live="polite"><b id="comboX">x1</b><i class="combo-bar"><i id="comboFill"></i></i></span>
-      <button class="pill pillbtn" id="voiceBtn" type="button" hidden>Voice off</button><span class="pill score-pill">Score <b id="hScore">0</b></span>
+      <span class="pill score-pill">Score <b id="hScore">0</b></span>
     </div>
     <div class="dots" id="dots" aria-hidden="true"></div>
     <div class="timer" aria-hidden="true"><i id="tbar"></i><span class="blitz-clock" id="blitzClock" hidden>60</span></div>
@@ -3211,12 +3210,9 @@ function splash(word,kind){if(RM)return;const s=document.getElementById('splash'
 const YES=['YES!!','BOOM!','BRAVO!','GENIUS!','NAILED IT!'],NOPE=['NOPE!','WRONG!','NOPE!','OUCH!','NOPE!'];
 
 const pick=a=>a[Math.random()*a.length|0];
-const voiceOn=()=>store.get('br_voice',true);
-let ttsVoice=null;
-function chooseVoice(){try{const vs=speechSynthesis.getVoices();ttsVoice=vs.find(v=>/en(-|_)(US|GB)/i.test(v.lang)&&/female|samantha|zira|google us/i.test(v.name))||vs.find(v=>/^en/i.test(v.lang))||null}catch(e){}}
-try{chooseVoice();speechSynthesis.onvoiceschanged=chooseVoice}catch(e){}
-function speak(text){if(!voiceOn()||(P.on&&!H.on))return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.pitch=1.75;u.rate=1.12;u.volume=.9;if(ttsVoice)u.voice=ttsVoice;speechSynthesis.speak(u)}catch(e){}}
-function stopSpeak(){try{speechSynthesis.cancel()}catch(e){}}
+/* Voice-over intentionally removed. Keep these no-ops so game feedback calls stay harmless. */
+function speak(){}
+function stopSpeak(){}
 const bulbos=new WeakMap();
 function mountBulbo(slot){if(!slot)return null;let b=bulbos.get(slot);if(b&&slot.contains(b.fig))return b;
   slot.classList.add('host-row');slot.replaceChildren();
@@ -3268,11 +3264,11 @@ vec2 g=gl_FragCoord.xy;float n=fract(sin(dot(floor(g),vec2(12.9898,78.233)))*437
     const loc=gl.getAttribLocation(p,'p');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
     ['R','K','Q','Q5','A','B','C'].forEach(k=>U[k]=gl.getUniformLocation(p,k));
     size();addEventListener('resize',size);
-    frame(40)}
+    frame(40);last=performance.now();requestAnimationFrame(loop)}
   function size(){if(!gl)return;const s=Math.max(4,Math.min(6,innerWidth/380));const w=Math.ceil(innerWidth/s),h=Math.ceil(Math.max(innerHeight,screen.height*.8)/s);if(cv.width===w&&Math.abs(cv.height-h)<60/s)return;cv.width=w;cv.height=h;gl.viewport(0,0,w,h);frame(RM?40:tt)}
   function frame(t){for(let i=0;i<3;i++)for(let j=0;j<3;j++)cur[i][j]+=(tgt[i][j]-cur[i][j])*.035;
     gl.uniform2f(U.R,cv.width,cv.height);const W=6.283185307179586,m=x=>x%W;gl.uniform4f(U.Q,m(t*.045),m(t*.07),m(t*.21),m(t*.17));gl.uniform1f(U.Q5,m(t*.25));gl.uniform1f(U.K,kk);gl.uniform3fv(U.A,cur[0]);gl.uniform3fv(U.B,cur[1]);gl.uniform3fv(U.C,cur[2]);gl.drawArrays(gl.TRIANGLES,0,3)}
-  let slow=0,acc=0;function loop(now){requestAnimationFrame(loop);if(document.hidden||document.body.classList.contains('in-room')){last=now;return}const gap=now-last;last=now;acc+=gap;if(acc<31)return;const dt=Math.min(.1,acc/1000);acc=0;slow=gap>24?Math.min(40,slow+1):Math.max(0,slow-1);spd+=(spdT-spd)*.05;tt+=dt*spd*1.6;kk*=.9;frame(tt)}
+  let slow=0,acc=0;function loop(now){requestAnimationFrame(loop);if(document.hidden||document.body.classList.contains('in-room')||document.body.classList.contains('no-bgfx')||document.body.classList.contains('user-reduced-motion')||RM){last=now;acc=0;return}const gap=now-last;last=now;acc+=gap;if(acc<31)return;const dt=Math.min(.1,acc/1000);acc=0;slow=gap>24?Math.min(40,slow+1):Math.max(0,slow-1);spd+=(spdT-spd)*.05;tt+=dt*spd*1.6;kk*=.9;frame(tt)}
   function kick(n){kk=Math.min(1.2,kk+.25*(n||1))}function boost(on){spdT=on?4:1}
   let palK='main',burstT=null,palRAF=0;function pal(k){try{ROOM.set(k)}catch(e){}const n=PALS[k]?k:'main';if(n===palK)return;palK=n;const next=PALS[n];tgt=next;if(gl){cancelAnimationFrame(palRAF);const from=cur.map(a=>a.slice()),start=performance.now();const step=now=>{const p=Math.min(1,(now-start)/480),e=1-Math.pow(1-p,3);cur=from.map((a,i)=>a.map((v,j)=>v+(next[i][j]-v)*e));frame(40);if(p<1)palRAF=requestAnimationFrame(step);else{cur=next.map(a=>a.slice());frame(40)}};palRAF=requestAnimationFrame(step);return}try{ROOM.set(k)}catch(e){}}
   return{init,pal,kick,boost}})();
@@ -4294,14 +4290,14 @@ async function openHostRoom(){HR={code:null,players:[],peers:[],lastQ:{}};const 
   let r=null;try{r=await openRoom(code)}catch(e){}
   if(!HR)return;if(!r){HR.err='Rooms are not available here. Use Solo or Pass & play. (claude '+((window.__ND||{}).c)+' · direct '+((window.__ND||{}).p)+')';renderSetup();return}
   HR.room=r;HR.code=code;keepAwake();
-  r.onPeers(ch=>{if(!HR)return;HR.peers=ch.peers;const seen=new Set();HR.players=[];for(const p of ch.peers){const pr=p.presence||{};if(pr.role!=='pl'||!pr.n)continue;const n=String(pr.n).slice(0,12);if(seen.has(n))continue;seen.add(n);HR.players.push({n,peer:p.peer,pr})}
+  r.onPeers(ch=>{if(!HR)return;HR.peers=ch.peers;const seen=new Set();HR.players=[];for(const p of ch.peers){const pr=p.presence||{};if(pr.role!=='pl'||!pr.n)continue;const n=String(pr.n).slice(0,12),u=pr._u||p.peer||n;if(seen.has(u))continue;seen.add(u);HR.players.push({n,u,peer:p.peer,pr})}
     if(M&&isRoom(M.mode)){ingestPhones();const sig=HR.players.map(p=>p.n+(p.pr.pk||'')).join('|');if(sig!==HR.pkSig){HR.pkSig=sig;pushHost()}}else if(!qq('bg-setup').hidden)renderSetup()});
   pushHost();renderSetup()}
 function closeHostRoom(){if(HR&&HR.room){try{HR.room.leave()}catch(e){}if(roomNS)roomNS.presence({live:null}).catch(()=>{})}HR=null}
-function pushHost(){if(!HR||!HR.room)return;const s={g:SU?SU.id:null,code:HR.code,ph:M?(M.S.win!=null?'over':'play'):'lobby',v:M?M.v:0,seats:M?M.seats.map(x=>({n:x.n,k:x.kind,c:x.col})):[],st:M?(M.G.pack?M.G.pack(M.S):M.S):null,lg:M?M.log.slice(0,3).map(l=>l.t):[]};
+function pushHost(){if(!HR||!HR.room)return;const s={g:SU?SU.id:null,code:HR.code,ph:M?(M.S.win!=null?'over':'play'):'lobby',v:M?M.v:0,seats:M?M.seats.map(x=>({n:x.n,k:x.kind,c:x.col,u:x.u||null})):[],st:M?(M.G.pack?M.G.pack(M.S):M.S):null,lg:M?M.log.slice(0,3).map(l=>l.t):[]};
   let j=JSON.stringify(s);if(j.length>3900){s.st=M&&M.G.slim?M.G.slim(M.S):s.st;}
   if(M&&M.deadline)s.dl=M.deadline;s.hpk=CR.pub||null;
-  if(M&&M.G.privFor&&CR.kp){const tok=HR.pt=(HR.pt||0)+1;s.enc={};Promise.all(M.seats.map(async(x,i)=>{if(x.kind!=='phone')return;const p=HR.players.find(q=>q.n===x.n);if(!p||!p.pr.pk)return;s.enc[x.n]=await crEnc(p.pr.pk,M.G.privFor(M.S,i))})).catch(e=>console.warn(e)).then(()=>{if(HR&&tok===HR.pt)HR.room.presence({role:'bghost',s}).catch(()=>{})})}
+  if(M&&M.G.privFor&&CR.kp){const tok=HR.pt=(HR.pt||0)+1;s.enc={};Promise.all(M.seats.map(async(x,i)=>{if(x.kind!=='phone')return;const p=HR.players.find(q=>q.u===x.u)||HR.players.find(q=>q.n===x.n);if(!p||!p.pr.pk)return;s.enc[x.u||x.n]=await crEnc(p.pr.pk,M.G.privFor(M.S,i))})).catch(e=>console.warn(e)).then(()=>{if(HR&&tok===HR.pt)HR.room.presence({role:'bghost',s}).catch(()=>{})})}
   else HR.room.presence({role:'bghost',s}).catch(()=>{});
   if(roomNS)roomNS.presence({live:{code:HR.code,g:'b:'+(SU?SU.id:''),n:HR.players.length,busy:M?1:0}}).catch(()=>{})}
 /* ---------- match ---------- */
@@ -4310,19 +4306,19 @@ async function start(){const G=ENG[SU.id];
   const seats=[];const you=(store.get('br_name','')||'You').slice(0,12);
   if(SU.mode==='bots'){seats.push({n:you,kind:'you'});for(let i=1;i<SU.n;i++)seats.push({n:PNAME_BOT[i-1],kind:'bot'})}
   else if(SU.mode==='local'){for(let i=0;i<SU.n;i++)seats.push({n:'Player '+(i+1),kind:'local'})}
-  else{if(SU.mode==='online')seats.push({n:you,kind:'you'});const ps=HR?HR.players.slice(0,SU.n-seats.length):[];ps.forEach(p=>seats.push({n:p.n,kind:'phone'}));let b=0;while(seats.length<Math.max(SU.n,G.min))seats.push({n:PNAME_BOT[b++],kind:'bot'})}
+  else{if(SU.mode==='online')seats.push({n:you,kind:'you'});const ps=HR?HR.players.slice(0,SU.n-seats.length):[];ps.forEach(p=>seats.push({n:p.n,u:p.u,kind:'phone'}));let b=0;while(seats.length<Math.max(SU.n,G.min))seats.push({n:PNAME_BOT[b++],kind:'bot'})}
   seats.forEach((s,i)=>{s.col=G.seatCol?G.seatCol(i,SU.opts):PCOL[i%6];if(s.kind==='bot'&&G.botName)s.n=G.botName(i,SU.opts)});
   setTimeout(()=>{try{TUT.show(SU.id)}catch(e){}},700);M={startT:Date.now(),id:SU.id,G,mode:SU.mode,seats,S:G.init(seats.length,{...SU.opts,kinds:seats.map(x=>x.kind)}),v:1,log:[],sel:null,curtain:null,botBusy:false};
   view('game');buildGame();try{toggleMax(true)}catch(e){}refresh()}
 function leave(){M=null;closeHostRoom();if(document.body.classList.contains('bg-max'))toggleMax(false)}
-function seatOf(n){return M.seats.findIndex(s=>s.n===n)}
+function seatOf(n,u){let i=u?M.seats.findIndex(s=>s.kind==='phone'&&s.u===u):-1;return i>=0?i:M.seats.findIndex(s=>s.kind==='phone'&&s.n===n)}
 function actors(){const t=M.G.turn(M.S);return t==null?[]:Array.isArray(t)?t:[t]}
 function viewSeat(){if(M.mode==='bots')return 0;if(M.mode==='online')return 0;if(isRoom(M.mode))return null;const a=actors().filter(i=>M.seats[i].kind==='local');return a.length?a[0]:(M.lastLocal!=null?M.lastLocal:0)}
 function act(seat,a){if(!M||M.S.win!=null)return false;try{const msg=M.G.apply(M.S,seat,a);if(msg)log(msg,seat)}catch(e){if(M.seats[seat].kind!=='bot')toast(e.message||String(e));else console.warn(e);return false}
   M.v++;const ps=M.sel;M.sel=null;try{if(M.G.keepSel)M.sel=M.G.keepSel(M.S,a,ps)}catch(e){}refresh();return true}
 function cur(){return M?viewSeat():null}
 window.__BRDact=(s,a)=>act(s,a);window.__BRDpb=()=>PB;
-window.__BRDphone=()=>{if(PB.S&&ENG[PB.S.g]&&ENG[PB.S.g].privFor&&PB.privV!==PB.S.v)return 'nopriv';const s=PB.S;if(!s||!s.st)return 'nostate';const G=ENG[s.g];const seat=s.seats.findIndex(x=>x.n===P.name);const st=G.unpack&&PB.cache?PB.cache.st:s.st;const t=G.turn(st);const a=t==null?[]:Array.isArray(t)?t:[t];if(!a.includes(seat))return 'wait';const x=G.bot(st,seat)||(G.botFallback&&G.botFallback(st,seat));const q=Date.now();if(room){if(G.secretAct&&G.secretAct(x)&&s.hpk)crEnc(s.hpk,x).then(e=>room.presence(plPres({bg:{q,e}})));else room.presence(plPres({bg:{q,a:x}}))}return 'acted'};
+window.__BRDphone=()=>{if(PB.S&&ENG[PB.S.g]&&ENG[PB.S.g].privFor&&PB.privV!==PB.S.v)return 'nopriv';const s=PB.S;if(!s||!s.st)return 'nostate';const G=ENG[s.g];const seat=s.seats.findIndex(x=>(room&&x.u===room.id)||(x.k==='phone'&&x.n===P.name));const st=G.unpack&&PB.cache?PB.cache.st:s.st;const t=G.turn(st);const a=t==null?[]:Array.isArray(t)?t:[t];if(!a.includes(seat))return 'wait';const x=G.bot(st,seat)||(G.botFallback&&G.botFallback(st,seat));const q=Date.now();if(room){if(G.secretAct&&G.secretAct(x)&&s.hpk)crEnc(s.hpk,x).then(e=>room.presence(plPres({bg:{q,e}})));else room.presence(plPres({bg:{q,a:x}}))}return 'acted'};
 function log(t,seat){t=String(t).replace(/\{(\d)\}/g,(m,k)=>M.seats[k]?M.seats[k].n:'?');if(seat!=null&&/^[a-z]/.test(t))t=M.seats[seat].n+' '+t;M.log.unshift({t,c:seat!=null?M.seats[seat].col:'#ffe7a8'});M.log=M.log.slice(0,40)}
 async function botLoop(){if(!M||M.botBusy)return;M.botBusy=true;const id=M.v;
   const bts=actors().filter(i=>M.seats[i].kind==='bot');const same=bts.length&&M.lastBot===bts[0]&&M.lastBotV===M.v-1;try{document.querySelectorAll('.bg-pl').forEach((e,i)=>e.classList.toggle('thinking',bts.includes(i)))}catch(e){}
@@ -4340,7 +4336,7 @@ function refresh(){if(!M)return;const vs=viewSeat();
   renderGame();pushHost();
   if(M.S.win!=null){bsfx('win');return}
   if(actors().some(i=>M.seats[i].kind==='bot'))botLoop()}
-function ingestPhones(){for(const p of HR.players){const pr=p.pr;if(!pr.bg)continue;const q=pr.bg.q|0;if(q<=(HR.lastQ[p.n]||0))continue;HR.lastQ[p.n]=q;const s=seatOf(p.n);if(s<0)continue;
+function ingestPhones(){for(const p of HR.players){const pr=p.pr;if(!pr.bg)continue;const q=pr.bg.q|0,key=p.u||p.n;if(q<=(HR.lastQ[key]||0))continue;HR.lastQ[key]=q;const s=seatOf(p.n,p.u);if(s<0)continue;
   if(pr.bg.e){if(!pr.pk)continue;const mv=M;crDec(pr.pk,pr.bg.e).then(a=>{if(M===mv)act(s,a)}).catch(e=>console.warn('bad secret move',e))}else act(s,pr.bg.a)}}
 /* ---------- game screen ---------- */
 function buildGame(){const g=qq('bg-game');rc(g,
@@ -4364,8 +4360,8 @@ function sidePlayers(){const acts=actors();return el('div',{class:'bg-players'},
 /* ---------- phone side ---------- */
 function phoneSync(s){PB.on=true;if(s&&PB.S&&PB.S.v!==s.v){const was=PB.myTurn;const G0=ENG[s.g];try{PB.sel=G0&&G0.keepSel&&s.st?G0.keepSel(G0.unpack?G0.unpack(s.st,null):s.st,null,PB.sel):null}catch(e){PB.sel=null}setTimeout(()=>{if(PB.myTurn&&!was){snd('turn');try{if(store.get('br_vibrate',true))navigator.vibrate&&navigator.vibrate(60)}catch(e){}}},0)}PB.S=s;const box=qq('phone');if(!box)return;const me=P.name;
   if(!s||s.ph==='lobby'||!s.st){rc(box,el('div',{class:'pcard'},el('span',{class:'eyebrow'},'Room '+(s?s.code:'')),el('h2',{},s&&s.g?name(s.g):'Board game'),el('p',{},'You’re in. The game starts from the big screen.'),el('div',{class:'waitpulse'},el('i'),el('i'),el('i'))));return}
-  const G=ENG[s.g];const seat=s.seats.findIndex(x=>x.n===me);if(!G)return;
-  if(G.privFor&&room&&CR.pub){const mine=s.enc&&s.enc[me];if(mine&&s.hpk&&PB.privKey!==s.v+':'+mine.iv){const kk=s.v+':'+mine.iv;PB.privKey=kk;crDec(s.hpk,mine).then(pv=>{PB.priv=pv;PB.privV=s.v;if(PB.S&&PB.S.v===s.v)phoneSync(PB.S)}).catch(e=>console.warn(e))}
+  const G=ENG[s.g];const seat=s.seats.findIndex(x=>(room&&x.u===room.id)||(x.k==='phone'&&x.n===me));if(!G)return;
+  if(G.privFor&&room&&CR.pub){const mine=s.enc&&s.enc[room.id||me];if(mine&&s.hpk&&PB.privKey!==s.v+':'+mine.iv){const kk=s.v+':'+mine.iv;PB.privKey=kk;crDec(s.hpk,mine).then(pv=>{PB.priv=pv;PB.privV=s.v;if(PB.S&&PB.S.v===s.v)phoneSync(PB.S)}).catch(e=>console.warn(e))}
     if(seat>=0&&s.hpk&&!mine&&Date.now()-(PB.pkT||0)>3000){PB.pkT=Date.now();try{room.presence(plPres({})).catch(()=>{})}catch(e){}}}
   const ck=s.v+':'+(PB.privV===s.v?1:0);if(G.unpack&&(!PB.cache||PB.cache.k!==ck))PB.cache={k:ck,st:G.unpack(s.st,PB.privV===s.v?PB.priv:null)};const st=G.unpack?PB.cache.st:s.st;s={...s,st};
   const t=G.turn(s.st);const acts=t==null?[]:Array.isArray(t)?t:[t];
@@ -7212,14 +7208,12 @@ function endSolo(){
   renderMe();
 }
 document.addEventListener('keydown',e=>{if($('#play').hidden||solo.locked||e.metaKey||e.ctrlKey||e.altKey)return;const k=e.key.toLowerCase();const i='1234'.indexOf(k);if(i<0)return;const b=document.querySelectorAll('#answers .ans')[i];if(b&&!b.disabled){e.preventDefault();b.click()}});
-$('#voiceBtn').onclick=e=>{store.set('br_voice',!voiceOn());e.currentTarget.textContent=voiceOn()?'Voice on':'Voice off';if(!voiceOn())stopSpeak()};
 $('#quitSolo').onclick=()=>{stopSpeak();clearInterval(solo.timer);clearInterval(solo.blitzTimer);solo.locked=true;$('#countdown').hidden=true;openSolo()};
 function openSolo(){stopSpeak();show('solo');renderModes();renderShelves()}
 $('#again').onclick=()=>{if(solo.mode==='daily')return openSolo();if(solo.cat)startSolo(solo.cat)};$('#otherTopic').onclick=openSolo;
 $('#goSolo').onclick=openSolo;$('#goDaily').onclick=startDaily;
 $('#homeBtn').onclick=()=>{stopSpeak();setTimeout(()=>say($('#homeHost'),pick(Q.home),'happy',{voice:false}),350);leaveParty();clearInterval(solo.timer);clearInterval(solo.blitzTimer);show('home');renderMe()};
 BG.init();MUS.arm();joinFromHash();addEventListener('hashchange',joinFromHash);$('#goBoards').onclick=()=>{leaveParty();BRD.open()};$('#backBtn').onclick=goBack;$('#musBtn').onclick=()=>MUS.toggle();$('#goCasino').onclick=()=>{leaveParty();CZ.open()};fxInit();buildTitle();buildTicker();renderMe();setTimeout(()=>say($('#homeHost'),Q.home[0],'happy',{voice:false}),900);
-const _vb=$('#voiceBtn');if(_vb)_vb.textContent=voiceOn()?'Voice on':'Voice off';
 
 /* ---------- PARTY: room plumbing ---------- */
 let roomNS=null;
@@ -7230,7 +7224,7 @@ const MAX_PLAYERS=10;
 async function openRoom(code){document.body.classList.add('rooming');try{return await openRoom2(code)}finally{document.body.classList.remove('rooming')}}
 async function openRoom2(code){const ns=await roomP;const UID=Math.random().toString(36).slice(2,10);let T=0,lastP=null,closed=false,pend=2,done=false;const lists=new Map(),cbs=[],rooms=[];
   const fire=()=>{const by=new Map();let k=0;for(const L of lists.values())for(const p of (L||[])){const pr=p.presence;const u=pr&&pr._u;if(!u){by.set('x'+(k++),p);continue}const o=by.get(u);if(!o||(pr._t||0)>(o.presence._t||0))by.set(u,{peer:u,presence:pr,sameTab:u===UID})}const ch={peers:[...by.values()]};cbs.forEach(f=>{try{f(ch)}catch(e){console.warn(e)}})};
-  const api={dual:true,presence(p){lastP=(p&&typeof p==='object')?Object.assign({},p,{_u:UID,_t:++T}):p;return Promise.all(rooms.map(r=>Promise.resolve(r.presence(lastP)).catch(()=>{}))).then(()=>{})},
+  const api={dual:true,id:UID,presence(p){lastP=(p&&typeof p==='object')?Object.assign({},p,{_u:UID,_t:++T}):p;return Promise.all(rooms.map(r=>Promise.resolve(r.presence(lastP)).catch(()=>{}))).then(()=>{})},
     onPeers(f){cbs.push(f);if(lists.size)setTimeout(fire,0);return()=>{}},leave(){closed=true;rooms.forEach(r=>{try{r.leave()}catch(e){}})}};
   return new Promise(res=>{const add=(r,key)=>{pend--;if(r){if(closed){try{r.leave()}catch(e){}}else{rooms.push(r);try{r.onPeers(ch=>{lists.set(key,ch.peers);fire()},()=>{})}catch(e){}if(lastP)Promise.resolve(r.presence(lastP)).catch(()=>{});if(!done){done=true;res(api)}}}if(!pend&&!done){done=true;try{const d=document.getElementById('netDiag');if(d)d.textContent='Details: claude '+__ND.c+' · direct '+__ND.p}catch(e){}res(null)}};
     window.__ND={c:ns?'joining':(window.claude&&window.claude.use?'room api null':'no claude api'),p:'connecting'};
@@ -7604,13 +7598,12 @@ function phoneCard(S,me,answered,locked){
   }
 }
 /* ---------- settings ---------- */
-const SETTINGS_DEFAULTS={br_music:true,br_sound:true,br_voice:true,br_vibrate:true,br_bgfx:true,br_reduce_motion:false,br_text_size:'normal',br_contrast:false,br_bot_speed:'normal',br_confirm_quit:true,br_tutorials:true};
+const SETTINGS_DEFAULTS={br_music:true,br_sound:true,br_vibrate:true,br_bgfx:true,br_reduce_motion:false,br_text_size:'normal',br_contrast:false,br_bot_speed:'normal',br_confirm_quit:true,br_tutorials:true};
 function applySettings(){
   document.body.classList.toggle('no-bgfx',!store.get('br_bgfx',true));
   document.body.classList.toggle('user-reduced-motion',store.get('br_reduce_motion',false));
   document.body.classList.toggle('high-contrast',store.get('br_contrast',false));
   document.documentElement.dataset.textSize=store.get('br_text_size','normal');
-  const v=$('#voiceBtn');if(v)v.textContent=voiceOn()?'Voice on':'Voice off';
 }
 function resetTutorials(){try{for(let i=localStorage.length-1;i>=0;i--){const k=localStorage.key(i);if(k&&k.startsWith('tut_'))localStorage.removeItem(k)}}catch(e){}}
 function openSettings(){
@@ -7625,9 +7618,8 @@ function openSettings(){
     el('div',{class:'set-row wide'},el('label',{},'Player name',el('small',{},'Used in solo, board games and online rooms')),name),
     toggle('Music','br_music','Background soundtrack',on=>{if(on)MUS.start();else MUS.stop()}),
     toggle('Sound effects','br_sound','Cards, buttons and game feedback'),
-    toggle('Voice host','br_voice','Gus reads reactions and prompts',on=>{if(!on)stopSpeak()}),
     toggle('Vibration','br_vibrate','Turn alerts on supported phones'),
-    toggle('Background art','br_bgfx','Static themed backdrop — no looping'),
+    toggle('Background animation','br_bgfx','Slow seamless movement with no visible restart'),
     toggle('Reduced motion','br_reduce_motion','Shortens movement and transitions'),
     choice('Text size','br_text_size',[['small','Small'],['normal','Normal'],['large','Large']]),
     toggle('High contrast','br_contrast','Stronger separation for text and panels'),
