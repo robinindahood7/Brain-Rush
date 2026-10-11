@@ -2669,7 +2669,7 @@ body.in-room .bg-side>*{background-color:rgba(10,12,18,.86)}
       <form class="joinform" id="jf">
         <div class="field"><label for="jname">Your name</label><input id="jname" maxlength="12" autocomplete="off" placeholder="Max 12 letters" required></div>
         <div class="field"><label>Your color</label><div class="swatches" id="jcolors"></div></div>
-        <div class="field"><label for="jcode">Room code</label><input id="jcode" maxlength="4" autocomplete="off" placeholder="ABCD" required></div>
+        <div class="field"><label for="jcode">Room code</label><input id="jcode" maxlength="6" autocomplete="off" placeholder="ABCDEF" required></div>
         <button class="btn pink" type="submit">Join</button>
         <p class="err" id="jerr" role="alert"></p>
       </form>
@@ -3843,7 +3843,7 @@ function renderSetup(){const G=ENG[SU.id],b=qq('bg-setup');
 function roomPanel(){if(!HR)openHostRoom();const pl=HR?HR.players:[];
   return el('div',{class:'bg-roompanel'},HR&&HR.code?[inviteBox(HR.code),
     el('div',{class:'bg-joined'},pl.length?pl.map((p,i)=>el('span',{class:'bg-chip',style:`--pc:${PCOL[i%6]}`},p.n)):el('span',{class:'muted'},'Waiting for phones…'))]:el('p',{class:'muted'},HR&&HR.err?HR.err:'Opening a room…'))}
-async function openHostRoom(){HR={code:null,players:[],peers:[],lastQ:{}};const code=Array.from({length:4},()=>'BCDFGHJKLMNPQRSTVWXZ'[Math.random()*20|0]).join('');
+async function openHostRoom(){HR={code:null,players:[],peers:[],lastQ:{}};const code=Array.from({length:6},()=>'BCDFGHJKLMNPQRSTVWXZ'[Math.random()*20|0]).join('');
   let r=null;try{r=await openRoom(code)}catch(e){}
   if(!HR)return;if(!r){HR.err='Rooms are not available here. Use Solo or Pass & play. (claude '+((window.__ND||{}).c)+' · direct '+((window.__ND||{}).p)+')';renderSetup();return}
   HR.room=r;HR.code=code;keepAwake();
@@ -5993,8 +5993,8 @@ function inviteBox(code){const url=inviteURL(code);let qr=QRC.get(code);
   if(url&&!qr){qr=el('div',{class:'inv-qr'});QRC.set(code,qr);loadQR().then(ok=>{if(ok)try{new QRCode(qr,{text:url,width:150,height:150,colorDark:'#14181c',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M})}catch(e){}})}
   const btn=el('button',{class:'cz-btn sm green inv-btn',type:'button',onclick:async()=>{const txt=url||code;try{if(url&&navigator.share&&matchMedia('(pointer:coarse)').matches){await navigator.share({title:'Brain Rush',text:'Join my Brain Rush game! Room '+code,url});return}await navigator.clipboard.writeText(txt);btn.textContent='Copied!';setTimeout(()=>btn.textContent=url?'Copy invite link':'Copy code',1600)}catch(e){}}},url?'Copy invite link':'Copy code');
   return el('div',{class:'invite'},url?qr:null,el('div',{class:'inv-txt'},el('small',{},url?'Scan with a phone camera, or send the link':'On phones: open this same game link, tap Join'),el('b',{class:'inv-code'},code),btn))}
-function joinFromHash(){const m=(location.hash||'').match(/join=([A-Za-z]{4})/);if(!m)return;try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}
-  setTimeout(()=>{$('#goJoin').click();$('#jcode').value=m[1].toUpperCase();const n=$('#jname');if(n.value.trim())$('#jf').requestSubmit();else n.focus()},400)}
+function joinFromHash(){const m=(location.hash||'').match(/(?:join|room)=([A-Za-z]{4,6})/);if(!m)return;const code=m[1].toUpperCase();try{history.replaceState(null,'',location.pathname+location.search+'#room='+code)}catch(e){}
+  setTimeout(()=>{$('#goJoin').click();$('#jcode').value=code;const n=$('#jname');if(n.value.trim())$('#jf').requestSubmit();else n.focus()},400)}
 
 /* ---------- fullscreen fit: Wildhand + board games scale up to fill the screen ---------- */
 function bigFit(){try{const wh=document.getElementById('cz-wh');const g=wh&&wh.querySelector('.wh2');
@@ -6179,8 +6179,9 @@ function goBack(){try{stopSpeak()}catch(e){}const cur=SECTIONS.find(s=>!$('#'+s)
   if(cur==='join'&&P.on&&!confirm('Leave this room?'))return;
   if(cur==='host'&&H.on&&!confirm('End the party for everyone?'))return;
   $('#homeBtn').click()}
-function leaveParty(){try{BRD.phoneOff()}catch(e){}clearInterval(H.loop);if(room){try{room.leave()}catch(e){}}if(H.on&&roomNS){roomNS.presence({live:null}).catch(()=>{})}room=null;H.on=false;P.on=false;H.sig='';P.sig=''}
+function leaveParty(){const wasPlayer=P.on;try{BRD.phoneOff()}catch(e){}clearInterval(H.loop);if(room){try{room.leave()}catch(e){}}if(H.on&&roomNS){roomNS.presence({live:null}).catch(()=>{})}room=null;H.on=false;P.on=false;H.sig='';P.sig='';if(wasPlayer&&/^#room=/.test(location.hash))try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}}
 const LETTERS='BCDFGHJKLMNPQRSTVWXZ';
+const MAX_PLAYERS=10;
 const GAMES={
   trivia:{name:'Rush Hour',color:'sun',min:1,how:'A question pops up here. Answer on your phone. Right and fast scores most. The last two questions are worth double.'},
   bluff:{name:'Big Fat Bluff',color:'pink',min:2,how:'Write a believable fake answer, then find the real one. Fool someone: +500. Find the truth: +1000. Points double in round 2 and triple in the Final Bluff.'},
@@ -6205,7 +6206,7 @@ $('#goHost').onclick=()=>hostOpen(false);
 async function hostOpen(fresh){
   leaveParty();show('host');const box=$('#host');box.replaceChildren(el('p',{class:'muted'},'Opening a room…'));
   const saved=store.get('br_host',null);const resume=!fresh&&saved&&Date.now()-saved.ts<3*3600e3;
-  H.code=resume?saved.code:Array.from({length:4},()=>LETTERS[Math.random()*LETTERS.length|0]).join('');
+  H.code=resume?saved.code:Array.from({length:6},()=>LETTERS[Math.random()*LETTERS.length|0]).join('');
   room=await openRoom(H.code);
   if(!room){show('home');$('#noRoom').hidden=false;return}
   Object.assign(H,{on:true,scores:resume?saved.scores||{}:{},colors:resume?saved.colors||{}:{},game:resume?saved.game||'trivia':H.game,cat:resume?saved.cat||'__mix':H.cat,ans:{},data:{},gain:{},lastGo:{},sig:'',seen:new Set(),S:{ph:'lobby'}});
@@ -6218,7 +6219,7 @@ function saveHost(){store.set('br_host',{code:H.code,scores:H.scores,colors:H.co
 function hostSync(){
   const seen=new Map();
   for(const p of H.peers){const pr=p.presence||{};if(pr.role!=='pl'||!pr.n)continue;const n=String(pr.n).slice(0,12).trim();if(!n)continue;const key=n.toLowerCase();if(seen.has(key))continue;seen.set(key,{n,peer:p.peer,pr})}
-  const list=[...seen.values()].slice(0,8);
+  const list=[...seen.values()].slice(0,MAX_PLAYERS);
   for(const r of list){if(!(r.n in H.scores))H.scores[r.n]=0;
     {const used=new Set(list.filter(x=>x.n!==r.n&&x.n in H.colors).map(x=>H.colors[x.n]));const want=Number.isInteger(r.pr.col)&&r.pr.col>=0&&r.pr.col<8?r.pr.col:-1;
      if(!(r.n in H.colors)||(want>=0&&want!==H.colors[r.n]&&!used.has(want))){let c=want>=0&&!used.has(want)?want:-1;if(c<0){c=(r.n in H.colors)?H.colors[r.n]:0;while(used.has(c))c=(c+1)%8}H.colors[r.n]=c}}
@@ -6343,10 +6344,10 @@ function buildStage(){const S=H.S,G=GAMES[H.game],box=$('#host');
     el('div',{class:'row'},sound,S.ph!=='lobby'?el('button',{class:'iconbtn',onclick:()=>{H.phaseEnd=0;H.auto=0;H.gain={};setPhase({ph:'lobby',k:null})}},'End game'):null));
   let mid;
   if(S.ph==='lobby'){
-    const ready=H.roster.length>=G.min;const slots=[];for(let i=0;i<8;i++){const r=H.roster[i];slots.push(r?el('div',{class:'slot full'},avatar(r.n,H.colors[r.n]),el('span',{class:'nm'},r.n),i===0?el('span',{class:'crown'},'VIP'):null):el('div',{class:'slot'},'open'))}
+    const ready=H.roster.length>=G.min;const slots=[];for(let i=0;i<MAX_PLAYERS;i++){const r=H.roster[i];slots.push(r?el('div',{class:'slot full'},avatar(r.n,H.colors[r.n]),el('span',{class:'nm'},r.n),i===0?el('span',{class:'crown'},'VIP'):null):el('div',{class:'slot'},'open'))}
     mid=el('div',{class:'lobbygrid'},
       el('div',{class:'picklist'},Object.entries(GAMES).map(([id,g])=>el('button',{class:'gpick','aria-pressed':String(H.game===id),onclick:()=>{H.game=id;pushState();renderHost()}},el('i',{class:'sw',style:`background:var(--${g.color})`}),el('b',{},g.name),el('span',{},`${g.min}+ players · `+g.how)))),
-      el('div',{class:'stagecard'},el('span',{class:'eyebrow'},`Players ${H.roster.length}/8`),el('div',{class:'slots'},slots),
+      el('div',{class:'stagecard'},el('span',{class:'eyebrow'},`Players ${H.roster.length}/${MAX_PLAYERS}`),el('div',{class:'slots'},slots),
         el('div',{class:'joinhint'},el('span',{},'On your phone: open this link, tap ',el('strong',{},'Join a party'),', pick room'),el('b',{},H.code)),
         H.game==='trivia'?el('div',{class:'field',style:'margin:16px 0 0'},el('label',{for:'hcat'},'Topic'),el('select',{id:'hcat',onchange:e=>{H.cat=e.target.value;saveHost()}},el('option',{value:'__mix'},'Mix of everything'),CATS.map(c=>el('option',{value:c,selected:H.cat===c},c)))):null,
         el('div',{class:'row',style:'margin-top:18px'},el('button',{class:'btn '+G.color,disabled:!ready,onclick:startGame},ready?'Start '+G.name:`Need ${G.min} player${G.min>1?'s':''}`),el('span',{class:'muted',style:'color:#6d6252;font-size:.85rem'},'The VIP can also start from their phone')),
@@ -6450,11 +6451,12 @@ function renderSwatches(){const box=$('#jcolors');if(!box)return;const cur=store
 $('#goJoin').onclick=()=>{leaveParty();show('join');$('#joinForm').hidden=false;$('#phone').hidden=true;$('#jerr').textContent='';$('#jname').value=store.get('br_name','');renderSwatches();renderLive()};
 $('#jf').addEventListener('submit',async e=>{e.preventDefault();
   const code=$('#jcode').value.trim().toUpperCase().replace(/[^A-Z]/g,'');const name=$('#jname').value.trim().replace(/\s+/g,' ').slice(0,12);
-  if(code.length!==4){$('#jerr').textContent='The room code is 4 letters.';return}
+  if(code.length<4||code.length>6){$('#jerr').textContent='The room code is 4 to 6 letters.';return}
   if(!name){$('#jerr').textContent='Type a name so your friends know it’s you.';$('#jname').focus();return}
   $('#jerr').textContent='Joining…';store.set('br_name',name);
   room=await openRoom(code);
   if(!room){$('#jerr').textContent='';show('home');$('#noRoom').hidden=false;return}
+  try{history.replaceState(null,'',location.pathname+location.search+'#room='+code)}catch(e){}
   const col=store.get('br_col',0);store.set('br_last',{code,name,ts:Date.now()});
   Object.assign(P,{on:true,name,code,col,S:null,hostSeen:false,k:null,a:null,draft:{},joinedAt:Date.now(),sig:'',go:0});
   room.presence({role:'pl',n:name,col,k:null,a:null,go:0,pk:window.__brPK||null}).catch(()=>{});
@@ -6482,7 +6484,7 @@ function phoneCard(S,me,answered,locked){
   const wait=(t,s,pulse)=>el('div',{class:'pcard'},el('h2',{},t),s?el('p',{},s):null,pulse?el('div',{class:'waitpulse'},el('i'),el('i'),el('i')):null);
   const gainCard=(fallback)=>{const g=S.gn&&me?S.gn[me.n]||0:0;if(P.splashK!==S.ph+JSON.stringify(S.gn||{})){P.splashK=S.ph+JSON.stringify(S.gn||{});setTimeout(()=>splash(g>0?pick(YES):pick(NOPE),g>0?'good':'bad'),120)}if(g>0)setTimeout(()=>confetti(innerWidth/2,innerHeight*.35,50,1),150);return el('div',{class:'pcard'},el('span',{class:'eyebrow'},'This round'),el('div',{class:'pgain'+(g?'':' zero')},g?'+'+fmt(g):'+0'),el('p',{},g?'Nice. Eyes on the big screen.':fallback||'No points this time. Eyes on the big screen.'))};
   if(!S)return wait(P.hostSeen?'Host left the room':'Looking for room '+P.code,P.hostSeen?'Hang on, they may be back in a sec.':Date.now()-P.joinedAt>6000?'No host here yet. Check the code on the big screen.':'Hang tight.',true);
-  if(!me&&S.pl&&S.pl.length>=8)return wait('Room is full','Eight players max. Catch the next one.');
+  if(!me&&S.pl&&S.pl.length>=MAX_PLAYERS)return wait('Room is full',MAX_PLAYERS+' players max. Catch the next one.');
   if(!me)return el('div',{class:'pcard'},el('h2',{},'Joining…'),el('p',{},'If this hangs, someone may already be using the name '+P.name+'.'),el('button',{class:'btn small',onclick:()=>{leaveParty();$('#goJoin').click()}},'Change name'));
   const g=GAMES[S.g]||GAMES.trivia;const vip=S.vip===me.n;
   switch(S.ph){
