@@ -2769,7 +2769,7 @@ body.bg-max .cf-mapwrap{height:calc(100vh - 330px)}
 #roombg .rdust{display:none}
 #roombg .rdust i{position:absolute;width:var(--sz);height:var(--sz);border-radius:50%;background:color-mix(in srgb,var(--rl) 60%,#fff);opacity:0;filter:blur(.4px)}
 @keyframes rdust{0%{opacity:0;transform:translate(0,30px)}15%{opacity:.7}85%{opacity:.5}100%{opacity:0;transform:translate(40px,-120px)}}
-body.in-room #bgfx{opacity:0;transition:opacity .8s}
+body.in-room #bgfx{opacity:1;transition:opacity .8s}
 #bgfx{transition:opacity .8s}
 /* tables sit IN the room: perspective + floor shadow + lamp light */
 body.in-room .tbl,body.in-room .cz-felt,body.in-room .pk-felt,body.in-room .bj-felt{filter:drop-shadow(0 40px 40px rgba(0,0,0,.75))}
@@ -3271,7 +3271,7 @@ vec2 g=gl_FragCoord.xy;float n=fract(sin(dot(floor(g),vec2(12.9898,78.233)))*437
   function size(){if(!gl)return;const s=Math.max(4,Math.min(6,innerWidth/380));const w=Math.ceil(innerWidth/s),h=Math.ceil(Math.max(innerHeight,screen.height*.8)/s);if(cv.width===w&&Math.abs(cv.height-h)<60/s)return;cv.width=w;cv.height=h;gl.viewport(0,0,w,h);frame(RM?40:tt)}
   function frame(t){for(let i=0;i<3;i++)for(let j=0;j<3;j++)cur[i][j]+=(tgt[i][j]-cur[i][j])*.035;
     gl.uniform2f(U.R,cv.width,cv.height);gl.uniform1f(U.T,t);gl.uniform4f(U.Q,1.8,2.8,8.4,6.8);gl.uniform1f(U.Q5,10.0);gl.uniform1f(U.K,kk);gl.uniform3fv(U.A,cur[0]);gl.uniform3fv(U.B,cur[1]);gl.uniform3fv(U.C,cur[2]);gl.drawArrays(gl.TRIANGLES,0,3)}
-  let acc=0;function loop(now){requestAnimationFrame(loop);if(document.hidden||document.body.classList.contains('in-room')||document.body.classList.contains('no-bgfx')||document.body.classList.contains('user-reduced-motion')||RM){last=now;acc=0;return}const gap=now-last;last=now;acc+=gap;if(acc<31)return;const dt=Math.min(.1,acc/1000);acc=0;spd+=(spdT-spd)*.05;tt+=dt*spd*.18;kk*=.9;frame(tt)}
+  let acc=0;function loop(now){requestAnimationFrame(loop);if(document.hidden||document.body.classList.contains('no-bgfx')||document.body.classList.contains('user-reduced-motion')||RM){last=now;acc=0;return}const gap=now-last;last=now;acc+=gap;if(acc<31)return;const dt=Math.min(.1,acc/1000);acc=0;spd+=(spdT-spd)*.05;tt+=dt*spd*.72;kk*=.9;frame(tt)}
   /* Music and game events must never reshape/restart the scenery. */
   function kick(){}function boost(on){spdT=on?2:1}
   let palK='main',burstT=null,palRAF=0;function pal(k){try{ROOM.set(k)}catch(e){}const n=PALS[k]?k:'main';if(n===palK)return;palK=n;const next=PALS[n];tgt=next;if(gl){cancelAnimationFrame(palRAF);const from=cur.map(a=>a.slice()),start=performance.now();const step=now=>{const p=Math.min(1,(now-start)/480),e=1-Math.pow(1-p,3);cur=from.map((a,i)=>a.map((v,j)=>v+(next[i][j]-v)*e));frame(tt);if(p<1)palRAF=requestAnimationFrame(step);else{cur=next.map(a=>a.slice());frame(tt)}};palRAF=requestAnimationFrame(step);return}try{ROOM.set(k)}catch(e){}}
