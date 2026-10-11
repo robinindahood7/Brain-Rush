@@ -2948,6 +2948,13 @@ body.bg-max #bg-game .bg-wrap{grid-template-columns:minmax(0,1fr) 330px!importan
 .tbl.pk,.tbl.bj,.felt.pkfelt,.felt.bjfelt{filter:brightness(1.12) drop-shadow(0 10px 0 rgba(0,0,0,.35))!important}
 #cz-wh .wh-side{background:#2a3b41!important}
 #cz-wh .wh-rs,#cz-wh .wh-hand,#cz-wh .wh-stats .st{background:#1c282d!important}
+/* Stable-background hotfix: decorative backgrounds must never start an
+   infinite animation. Gameplay feedback (dice, turns and piece moves) stays on. */
+#bgfx,#dust{display:none!important}
+.door::after,.qcard::after,.bg-tile::after,.bg-hero .cv,.ts-menu.cv .mcv,
+#roombg .rb,#roombg .rlight,#roombg .rdust,.dc-sweep,.cf-snow,.hx-waves{
+  animation:none!important;
+}
 </style>
 
 <canvas id="bgfx" aria-hidden="true"></canvas><div id="crt" aria-hidden="true"></div><div id="dust" aria-hidden="true"><i style="--x:41%;--s:3px;--t:26s;--dl:-20s;--dx:-68px"></i><i style="--x:9%;--s:5px;--t:17s;--dl:-11s;--dx:69px"></i><i style="--x:7%;--s:5px;--t:20s;--dl:-1s;--dx:-58px"></i><i style="--x:55%;--s:4px;--t:16s;--dl:-7s;--dx:-57px"></i><i style="--x:70%;--s:4px;--t:15s;--dl:-26s;--dx:64px"></i><i style="--x:15%;--s:3px;--t:32s;--dl:-30s;--dx:-65px"></i><i style="--x:73%;--s:5px;--t:26s;--dl:-1s;--dx:-24px"></i><i style="--x:5%;--s:5px;--t:18s;--dl:-9s;--dx:27px"></i><i style="--x:18%;--s:5px;--t:17s;--dl:-18s;--dx:-2px"></i><i style="--x:71%;--s:3px;--t:17s;--dl:-18s;--dx:66px"></i><i style="--x:81%;--s:3px;--t:25s;--dl:-3s;--dx:60px"></i><i style="--x:91%;--s:2px;--t:32s;--dl:-1s;--dx:78px"></i><i style="--x:26%;--s:4px;--t:31s;--dl:-13s;--dx:0px"></i><i style="--x:59%;--s:5px;--t:28s;--dl:-11s;--dx:-4px"></i><i style="--x:31%;--s:3px;--t:21s;--dl:-2s;--dx:67px"></i><i style="--x:38%;--s:5px;--t:29s;--dl:-28s;--dx:7px"></i><i style="--x:93%;--s:4px;--t:23s;--dl:-19s;--dx:-62px"></i><i style="--x:15%;--s:5px;--t:27s;--dl:-5s;--dx:7px"></i><i style="--x:19%;--s:4px;--t:27s;--dl:-1s;--dx:-61px"></i><i style="--x:97%;--s:5px;--t:32s;--dl:-25s;--dx:0px"></i><i style="--x:43%;--s:3px;--t:29s;--dl:-18s;--dx:36px"></i><i style="--x:8%;--s:2px;--t:22s;--dl:-15s;--dx:-64px"></i><i style="--x:7%;--s:3px;--t:32s;--dl:-21s;--dx:34px"></i><i style="--x:36%;--s:4px;--t:25s;--dl:-0s;--dx:38px"></i><i style="--x:45%;--s:3px;--t:17s;--dl:-15s;--dx:-65px"></i><i style="--x:27%;--s:3px;--t:18s;--dl:-23s;--dx:-17px"></i></div><div id="splash" class="splash" hidden aria-hidden="true"></div><button id="musBtn" type="button" aria-pressed="false" aria-label="Toggle music"><span class="eq"><i></i><i></i><i></i></span><span class="ml">Music off</span></button><canvas id="fx" aria-hidden="true"></canvas><div id="flash" aria-hidden="true"></div><div id="countdown" hidden aria-live="assertive"></div>
@@ -3250,7 +3257,7 @@ col+=smoothstep(.93,1.,.5+.5*sin((p.x-p.y)*2.2))*(.11+K*.25);
 float fine=sin(v*38.+w*9.);col+=smoothstep(.82,1.,fine)*.045;col-=smoothstep(.82,1.,-fine)*.035;
 float ridge=abs(sin(length(p)*2.6-Q5+v*3.));col*=.93+.07*smoothstep(.0,.25,ridge);
 vec2 g=gl_FragCoord.xy;float n=fract(sin(dot(floor(g),vec2(12.9898,78.233)))*43758.5453);col+=(n-.5)*.035;col*=1.-smoothstep(.7,1.6,d)*(.28-K*.1);col=col*1.12+.03;col+=K*.06*vec3(1.,.4,.8);gl_FragColor=vec4(col,1.);}`;
-  function init(){cv=document.getElementById('bgfx');if(!cv)return;
+  function init(){cv=document.getElementById('bgfx');if(cv)cv.remove();return;
     try{gl=cv.getContext('webgl',{antialias:false,depth:false})}catch(e){}
     if(!gl){document.body.classList.add('nogl');cv.remove();return}
     const sh=(t,s)=>{const o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);return o};
@@ -7596,9 +7603,9 @@ function phoneCard(S,me,answered,locked){
   }
 }
 /* ---------- settings ---------- */
-const SETTINGS_DEFAULTS={br_music:true,br_sound:true,br_voice:true,br_vibrate:true,br_bgfx:true,br_reduce_motion:false,br_text_size:'normal',br_contrast:false,br_bot_speed:'normal',br_confirm_quit:true,br_tutorials:true};
+const SETTINGS_DEFAULTS={br_music:true,br_sound:true,br_voice:true,br_vibrate:true,br_bgfx:false,br_reduce_motion:false,br_text_size:'normal',br_contrast:false,br_bot_speed:'normal',br_confirm_quit:true,br_tutorials:true};
 function applySettings(){
-  document.body.classList.toggle('no-bgfx',!store.get('br_bgfx',true));
+  document.body.classList.add('no-bgfx');
   document.body.classList.toggle('user-reduced-motion',store.get('br_reduce_motion',false));
   document.body.classList.toggle('high-contrast',store.get('br_contrast',false));
   document.documentElement.dataset.textSize=store.get('br_text_size','normal');
@@ -7619,7 +7626,6 @@ function openSettings(){
     toggle('Sound effects','br_sound','Cards, buttons and game feedback'),
     toggle('Voice host','br_voice','Gus reads reactions and prompts',on=>{if(!on)stopSpeak()}),
     toggle('Vibration','br_vibrate','Turn alerts on supported phones'),
-    toggle('Animated background','br_bgfx','Paint, dust and room motion'),
     toggle('Reduced motion','br_reduce_motion','Shortens movement and transitions'),
     choice('Text size','br_text_size',[['small','Small'],['normal','Normal'],['large','Large']]),
     toggle('High contrast','br_contrast','Stronger separation for text and panels'),
